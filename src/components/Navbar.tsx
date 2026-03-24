@@ -1,3 +1,4 @@
+import { useLanguage } from "@/contexts/LanguageContext";
 import React, { useState } from 'react';
 import Logo from './Logo';
 import { Menu, X, ShoppingCart } from 'lucide-react';
