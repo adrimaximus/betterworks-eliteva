@@ -1,23 +1,25 @@
-
 import React from 'react';
 import { Shield, Award, Rocket } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const AboutSection: React.FC = () => {
+  const { t } = useLanguage();
+  
   const features = [
     {
       icon: Shield,
-      title: "Keamanan Data",
-      description: "Keamanan data Anda adalah prioritas utama kami dengan enkripsi tingkat tinggi dan protokol keamanan terbaru."
+      title: t('about.feature.1.title'),
+      description: t('about.feature.1.desc')
     },
     {
       icon: Award,
-      title: "Kualitas Terbaik",
-      description: "Kami menghadirkan layanan dengan standar kualitas tinggi untuk hasil yang optimal bagi bisnis Anda."
+      title: t('about.feature.2.title'),
+      description: t('about.feature.2.desc')
     },
     {
       icon: Rocket,
-      title: "Pertumbuhan Bisnis",
-      description: "Fokus pada solusi yang mendorong pertumbuhan bisnis dan meningkatkan konversi pelanggan Anda."
+      title: t('about.feature.3.title'),
+      description: t('about.feature.3.desc')
     }
   ];
 
@@ -27,13 +29,13 @@ const AboutSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div className="space-y-6">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Tentang <span className="heading-gradient">Betterworks</span>
+              {t('about.header.1')} <span className="heading-gradient">{t('about.header.2')}</span>
             </h2>
             <p className="text-gray-300">
-              Betterworks.id adalah sebuah startup yang bertujuan untuk memberdayakan bisnis menengah di Indonesia, khususnya di area Jabodetabek, untuk berkembang di pasar digital. Misi inti kami adalah menyediakan layanan aktivasi digital yang disesuaikan untuk mendukung bisnis dalam memperoleh dan mempertahankan pelanggan melalui saluran digital.
+              {t('about.desc.1')}
             </p>
             <p className="text-gray-400">
-              Kami hadir untuk menjadi partner digital yang membantu bisnis Anda tumbuh dengan solusi teknologi terkini, termasuk pemanfaatan AI untuk mengoptimalkan proses bisnis dan meningkatkan pengalaman pelanggan.
+              {t('about.desc.2')}
             </p>
             
             <div className="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -63,25 +65,25 @@ const AboutSection: React.FC = () => {
                 <div className="glass-morphism aspect-square rounded-lg p-4 flex items-center justify-center">
                   <div className="text-center">
                     <h3 className="text-4xl font-bold text-gradient mb-1">100+</h3>
-                    <p className="text-sm text-gray-400">Proyek Selesai</p>
+                    <p className="text-sm text-gray-400">{t('about.stat.1')}</p>
                   </div>
                 </div>
                 <div className="glass-morphism aspect-square rounded-lg p-4 flex items-center justify-center">
                   <div className="text-center">
                     <h3 className="text-4xl font-bold text-gradient mb-1">90%</h3>
-                    <p className="text-sm text-gray-400">Klien Puas</p>
+                    <p className="text-sm text-gray-400">{t('about.stat.2')}</p>
                   </div>
                 </div>
                 <div className="glass-morphism aspect-square rounded-lg p-4 flex items-center justify-center">
                   <div className="text-center">
                     <h3 className="text-4xl font-bold text-gradient mb-1">24/7</h3>
-                    <p className="text-sm text-gray-400">Dukungan</p>
+                    <p className="text-sm text-gray-400">{t('about.stat.3')}</p>
                   </div>
                 </div>
                 <div className="glass-morphism aspect-square rounded-lg p-4 flex items-center justify-center">
                   <div className="text-center">
                     <h3 className="text-4xl font-bold text-gradient mb-1">50+</h3>
-                    <p className="text-sm text-gray-400">Mitra Bisnis</p>
+                    <p className="text-sm text-gray-400">{t('about.stat.4')}</p>
                   </div>
                 </div>
               </div>
