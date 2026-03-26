@@ -45,7 +45,7 @@ const App = () => {
       <LanguageProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Navigate to="/elite-va" replace />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/services" element={<ServiceManagement />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
