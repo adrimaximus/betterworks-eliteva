@@ -218,8 +218,11 @@ const HeroSection: React.FC = () => (
 );
 
 const HowItWorksSection: React.FC = () => {
+  const [currentStep, setCurrentStep] = useState(0);
   const [selectedPrimary, setSelectedPrimary] = useState<string[]>(['customer-service', 'whatsapp']);
   const [selectedSupport, setSelectedSupport] = useState<string[]>(['email-followup', 'dashboard']);
+  const [selectedChannels, setSelectedChannels] = useState<string[]>(['lead-response', 'customer-support']);
+  const [selectedIntegrations, setSelectedIntegrations] = useState<string[]>(['gmail', 'google-drive', 'sheets', 'crm']);
 
   const toggleSelection = (current: string[], value: string, setter: React.Dispatch<React.SetStateAction<string[]>>) => {
     if (current.includes(value)) {
@@ -240,6 +243,19 @@ const HowItWorksSection: React.FC = () => {
     { id: 'lead-qualification', label: 'Lead Qualification', desc: 'Screen prospects automatically', icon: Users, color: 'text-purple-600', bg: 'bg-purple-100' },
     { id: 'order-handling', label: 'Order Handling', desc: 'Track and process requests', icon: ShoppingCart, color: 'text-pink-600', bg: 'bg-pink-100' },
   ];
+  const channelOptions = [
+    { id: 'lead-response', label: 'Lead Response', desc: 'Reply cepat ke prospect masuk', icon: MessageCircle, color: 'text-green-600', bg: 'bg-green-100' },
+    { id: 'auto-reminder', label: 'Auto Reminder', desc: 'Reminder jadwal dan follow-up', icon: Bell, color: 'text-orange-500', bg: 'bg-orange-100' },
+    { id: 'customer-support', label: 'Customer Support', desc: 'FAQ dan inbound service', icon: Headphones, color: 'text-blue-600', bg: 'bg-blue-100' },
+    { id: 'broadcast', label: 'Broadcast Follow-up', desc: 'Reach out massal dengan konteks', icon: Zap, color: 'text-yellow-600', bg: 'bg-yellow-100' },
+  ];
+  const stepItems = [
+    { title: 'Create Agent', subtitle: 'Buat AI agent sesuai workflow', icon: UserPlus },
+    { title: 'Pick Focus', subtitle: 'Pilih layanan utama & support', icon: Target },
+    { title: 'WhatsApp Flow', subtitle: 'Tentukan peran agent di WhatsApp', icon: MessageCircle },
+    { title: 'Connect Tools', subtitle: 'Hubungkan app & ecosystem', icon: PlugZap },
+    { title: 'Scale Outcome', subtitle: 'Lihat hasil assistant kamu', icon: Rocket },
+  ];
 
   const supportOptions = [
     { id: 'email-followup', label: 'Email Follow-up', desc: 'Auto nurture & reminders', icon: Mail, color: 'text-red-500', bg: 'bg-red-100' },
@@ -249,18 +265,38 @@ const HowItWorksSection: React.FC = () => {
   ];
 
   const ecosystemOptions = [
-    { label: 'APIs', icon: Code2, color: 'text-purple-600', bg: 'bg-purple-100' },
-    { label: 'Gmail', icon: Mail, color: 'text-red-500', bg: 'bg-red-100' },
-    { label: 'Google Drive', icon: Cloud, color: 'text-yellow-600', bg: 'bg-yellow-100' },
-    { label: 'Calendar', icon: Calendar, color: 'text-blue-500', bg: 'bg-blue-100' },
-    { label: 'Sheets', icon: Table, color: 'text-green-600', bg: 'bg-green-100' },
-    { label: 'Maps', icon: Map, color: 'text-teal-600', bg: 'bg-teal-100' },
-    { label: 'Terminal', icon: Terminal, color: 'text-gray-700', bg: 'bg-gray-100' },
-    { label: 'CRM', icon: Users, color: 'text-indigo-600', bg: 'bg-indigo-100' },
+    { id: 'apis', label: 'APIs', icon: Code2, color: 'text-purple-600', bg: 'bg-purple-100' },
+    { id: 'gmail', label: 'Gmail', icon: Mail, color: 'text-red-500', bg: 'bg-red-100' },
+    { id: 'google-drive', label: 'Google Drive', icon: Cloud, color: 'text-yellow-600', bg: 'bg-yellow-100' },
+    { id: 'calendar', label: 'Calendar', icon: Calendar, color: 'text-blue-500', bg: 'bg-blue-100' },
+    { id: 'sheets', label: 'Sheets', icon: Table, color: 'text-green-600', bg: 'bg-green-100' },
+    { id: 'maps', label: 'Maps', icon: Map, color: 'text-teal-600', bg: 'bg-teal-100' },
+    { id: 'terminal', label: 'Terminal', icon: Terminal, color: 'text-gray-700', bg: 'bg-gray-100' },
+    { id: 'crm', label: 'CRM', icon: Users, color: 'text-indigo-600', bg: 'bg-indigo-100' },
   ];
 
   const selectedPrimaryLabels = primaryOptions.filter((item) => selectedPrimary.includes(item.id)).map((item) => item.label);
   const selectedSupportLabels = supportOptions.filter((item) => selectedSupport.includes(item.id)).map((item) => item.label);
+  const selectedChannelLabels = channelOptions.filter((item) => selectedChannels.includes(item.id)).map((item) => item.label);
+  const selectedIntegrationLabels = ecosystemOptions.filter((item) => selectedIntegrations.includes(item.id)).map((item) => item.label);
+
+  const toggleLimitedSelection = (
+    current: string[],
+    value: string,
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+    limit: number
+  ) => {
+    if (current.includes(value)) {
+      if (current.length === 1) return;
+      setter(current.filter((item) => item !== value));
+      return;
+    }
+    if (current.length >= limit) {
+      setter([...current.slice(1), value]);
+      return;
+    }
+    setter([...current, value]);
+  };
 
   return (
     <section id="how-it-works" className="pt-10 md:pt-16 pb-20 md:pb-24 bg-white">
@@ -284,232 +320,322 @@ const HowItWorksSection: React.FC = () => {
                 lalu berujung pada assistant yang benar-benar membantu scale up pekerjaan tim.
               </p>
             </div>
-
-            <div className="relative hidden xl:block mb-10">
-              <div className="absolute left-[16.66%] right-[16.66%] top-[6rem] h-[2px] bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200" />
-              <div className="absolute left-1/2 top-[6rem] h-[4.75rem] w-[2px] -translate-x-1/2 bg-gradient-to-b from-yellow-300 via-yellow-400 to-yellow-200" />
-              <div className="absolute left-[33.33%] top-[10.75rem] h-[2px] w-[33.34%] bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200" />
-
-              {[
-                'left-[16.66%] top-[5.72rem]',
-                'left-[50%] top-[5.72rem] -translate-x-1/2',
-                'left-[83.33%] top-[5.72rem] -translate-x-full',
-                'left-[33.33%] top-[10.47rem] -translate-x-1/2',
-                'left-[66.67%] top-[10.47rem] -translate-x-1/2',
-                'left-[50%] top-[8.1rem] -translate-x-1/2'
-              ].map((pos) => (
-                <div
-                  key={pos}
-                  className={`absolute ${pos} h-3.5 w-3.5 rounded-full bg-yellow-400 shadow-[0_0_0_10px_rgba(253,209,0,0.11)] animate-pulse`}
-                />
-              ))}
-            </div>
-
-            <div className="relative xl:hidden">
-              <div className="absolute left-4 top-6 bottom-6 w-[2px] bg-gradient-to-b from-yellow-200 via-yellow-400 to-yellow-200" />
-              {['top-8', 'top-[32%]', 'top-[55%]', 'top-[76%]', 'bottom-8'].map((pos) => (
-                <div
-                  key={pos}
-                  className={`absolute left-[9px] ${pos} h-3 w-3 rounded-full bg-yellow-400 shadow-[0_0_0_8px_rgba(253,209,0,0.11)]`}
-                />
-              ))}
-            </div>
-
-            <div className="relative space-y-8 xl:space-y-10">
-              <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 xl:gap-8">
-                <div className="relative rounded-3xl bg-white/92 border border-yellow-100 p-6 shadow-[0_20px_45px_rgba(17,24,39,0.06)] backdrop-blur xl:min-h-[250px] xl:ml-0 ml-8">
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="text-xs font-bold tracking-widest text-gray-400">STEP 01</span>
-                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center bg-yellow-100 text-gray-900 shadow-sm">
-                      <UserPlus size={20} />
-                    </div>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Create your AI agent</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                    Agent dibangun sesuai workflow bisnis user, bukan template generik.
-                  </p>
-                  <div className="rounded-2xl border border-yellow-100 bg-yellow-50/70 p-4 text-sm text-gray-700">
-                    Personal AI operator yang siap menerima role utama dan role pendukung.
-                  </div>
-                </div>
-
-                <div className="relative rounded-3xl bg-white/92 border border-yellow-100 p-6 shadow-[0_20px_45px_rgba(17,24,39,0.06)] backdrop-blur xl:min-h-[250px] xl:ml-0 ml-8">
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="text-xs font-bold tracking-widest text-gray-400">STEP 02</span>
-                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center bg-yellow-100 text-gray-900 shadow-sm">
-                      <Target size={20} />
-                    </div>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Choose the right focus mix</h3>
-                  <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Primary focus · pilih 2</p>
-                  <div className="space-y-2.5 mb-4">
-                    {primaryOptions.map((item) => {
-                      const Icon = item.icon;
-                      const active = selectedPrimary.includes(item.id);
-                      return (
-                        <button
-                          key={item.id}
-                          type="button"
-                          onClick={() => toggleSelection(selectedPrimary, item.id, setSelectedPrimary)}
-                          className={`w-full text-left rounded-2xl border p-3 transition-all duration-200 ${
-                            active
-                              ? 'border-yellow-300 shadow-[0_12px_30px_rgba(253,209,0,0.18)] bg-yellow-50'
-                              : 'border-gray-200 bg-white hover:border-yellow-200 hover:-translate-y-0.5'
-                          }`}
-                        >
-                          <div className="flex items-start gap-3">
-                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${item.bg} ${item.color}`}>
-                              <Icon size={18} />
-                            </div>
-                            <div className="flex-1">
-                              <div className="flex items-center justify-between gap-3">
-                                <p className="text-sm font-semibold text-gray-900">{item.label}</p>
-                                {active && <span className="text-[10px] font-bold tracking-widest uppercase text-gray-900">Selected</span>}
-                              </div>
-                              <p className="text-xs text-gray-500 mt-0.5">{item.desc}</p>
-                            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-6 lg:gap-8">
+              <div className="rounded-[1.8rem] border border-yellow-100 bg-white/80 p-4 md:p-5 shadow-[0_18px_40px_rgba(17,24,39,0.05)] backdrop-blur">
+                <div className="space-y-3">
+                  {stepItems.map((step, index) => {
+                    const Icon = step.icon;
+                    const active = index === currentStep;
+                    const completed = index < currentStep;
+                    return (
+                      <button
+                        key={step.title}
+                        type="button"
+                        onClick={() => setCurrentStep(index)}
+                        className={`w-full text-left rounded-2xl border p-4 transition-all duration-200 ${
+                          active
+                            ? 'border-yellow-300 bg-yellow-50 shadow-[0_14px_30px_rgba(253,209,0,0.16)]'
+                            : completed
+                              ? 'border-yellow-200 bg-white'
+                              : 'border-gray-200 bg-white hover:border-yellow-200'
+                        }`}
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className={`mt-0.5 w-11 h-11 rounded-2xl flex items-center justify-center ${
+                            active ? 'bg-yellow-100 text-gray-900' : completed ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'
+                          }`}>
+                            <Icon size={19} />
                           </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Support focus · pilih 2</p>
-                  <div className="space-y-2.5">
-                    {supportOptions.map((item) => {
-                      const Icon = item.icon;
-                      const active = selectedSupport.includes(item.id);
-                      return (
-                        <button
-                          key={item.id}
-                          type="button"
-                          onClick={() => toggleSelection(selectedSupport, item.id, setSelectedSupport)}
-                          className={`w-full text-left rounded-2xl border p-3 transition-all duration-200 ${
-                            active
-                              ? 'border-yellow-300 shadow-[0_12px_30px_rgba(253,209,0,0.18)] bg-yellow-50'
-                              : 'border-gray-200 bg-white hover:border-yellow-200 hover:-translate-y-0.5'
-                          }`}
-                        >
-                          <div className="flex items-start gap-3">
-                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${item.bg} ${item.color}`}>
-                              <Icon size={18} />
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="text-xs font-bold tracking-widest text-gray-400">STEP 0{index + 1}</span>
+                              {completed && <Check size={15} className="text-green-600" />}
                             </div>
-                            <div className="flex-1">
-                              <div className="flex items-center justify-between gap-3">
-                                <p className="text-sm font-semibold text-gray-900">{item.label}</p>
-                                {active && <span className="text-[10px] font-bold tracking-widest uppercase text-gray-900">Selected</span>}
-                              </div>
-                              <p className="text-xs text-gray-500 mt-0.5">{item.desc}</p>
-                            </div>
+                            <p className="text-sm font-semibold text-gray-900 mt-1">{step.title}</p>
+                            <p className="text-xs text-gray-500 mt-1">{step.subtitle}</p>
                           </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="relative rounded-3xl bg-gray-900 text-white p-6 shadow-[0_22px_55px_rgba(17,24,39,0.18)] overflow-hidden xl:min-h-[250px] xl:ml-0 ml-8">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(253,209,0,0.18),transparent_30%)]" />
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-5">
-                      <span className="text-xs font-bold tracking-widest text-gray-400">STEP 03</span>
-                      <div className="w-11 h-11 rounded-2xl flex items-center justify-center bg-white/10 border border-white/10">
-                        <MessageCircle size={20} style={{ color: '#fdd100' }} />
-                      </div>
-                    </div>
-                    <h3 className="text-lg font-bold mb-2">Inject into WhatsApp</h3>
-                    <p className="text-sm text-gray-300 leading-relaxed mb-4">
-                      Setelah fokus dipilih, agent langsung aktif di WhatsApp untuk chat, follow-up, reminder, dan support.
-                    </p>
-                    <div className="space-y-2.5">
-                      {['Lead response', 'Auto reminder', 'Customer support', 'Broadcast follow-up'].map((item) => (
-                        <div key={item} className="flex items-center gap-2 rounded-xl bg-white/5 border border-white/10 px-3 py-2.5 text-sm text-gray-200">
-                          <span className="w-2 h-2 rounded-full" style={{ background: '#fdd100' }} />
-                          {item}
                         </div>
-                      ))}
-                    </div>
-                  </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-8 xl:px-[8%]">
-                <div className="relative rounded-3xl bg-white/92 border border-yellow-100 p-6 shadow-[0_20px_45px_rgba(17,24,39,0.06)] backdrop-blur xl:min-h-[330px] xl:ml-0 ml-8">
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="text-xs font-bold tracking-widest text-gray-400">STEP 04</span>
-                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center bg-yellow-100 text-gray-900 shadow-sm">
-                      <PlugZap size={20} />
-                    </div>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Connect your ecosystem</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                    Agent tidak berhenti di chat — ia terhubung ke tools kerja dan data yang kamu pakai setiap hari.
-                  </p>
-                  <div className="grid grid-cols-2 gap-2.5">
-                    {ecosystemOptions.map((item) => {
-                      const Icon = item.icon;
-                      return (
-                        <div key={item.label} className="rounded-2xl border border-gray-200 bg-white px-3 py-3 shadow-sm transition-transform duration-200 hover:-translate-y-0.5">
-                          <div className="flex items-center gap-2.5">
-                            <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${item.bg} ${item.color}`}>
-                              <Icon size={17} />
-                            </div>
-                            <span className="text-xs font-semibold text-gray-700">{item.label}</span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+              <div className="relative rounded-[1.9rem] border border-yellow-100 bg-white/92 p-5 md:p-7 lg:p-8 shadow-[0_22px_55px_rgba(17,24,39,0.06)] backdrop-blur min-h-[560px]">
+                <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-yellow-300 to-transparent" />
+                <div className="absolute top-0 left-0 right-0 h-1.5 rounded-t-[1.9rem] overflow-hidden bg-yellow-100/70">
+                  <div
+                    className="h-full rounded-r-full transition-all duration-500"
+                    style={{ width: `${((currentStep + 1) / stepItems.length) * 100}%`, background: 'linear-gradient(90deg, #fdd100 0%, #f2c300 100%)' }}
+                  />
                 </div>
 
-                <div className="relative rounded-3xl border border-yellow-200 p-6 shadow-[0_24px_60px_rgba(253,209,0,0.22)] overflow-hidden xl:min-h-[330px] xl:ml-0 ml-8" style={{ background: 'linear-gradient(135deg, rgba(253,209,0,0.96) 0%, rgba(255,243,183,0.96) 100%)' }}>
-                  <div className="absolute top-0 right-0 h-28 w-28 rounded-full blur-3xl" style={{ background: 'rgba(255,255,255,0.35)' }} />
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-5">
-                      <span className="text-xs font-bold tracking-widest text-gray-700">STEP 05</span>
-                      <div className="w-11 h-11 rounded-2xl flex items-center justify-center bg-white/60 border border-white/60">
-                        <Rocket size={20} className="text-gray-900" />
+                <div className="mb-6 pt-2">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 rounded-2xl bg-yellow-100 flex items-center justify-center text-gray-900 shadow-sm">
+                      {currentStep === 0 && <UserPlus size={20} />}
+                      {currentStep === 1 && <Target size={20} />}
+                      {currentStep === 2 && <MessageCircle size={20} />}
+                      {currentStep === 3 && <PlugZap size={20} />}
+                      {currentStep === 4 && <Rocket size={20} />}
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold tracking-widest text-gray-400">STEP 0{currentStep + 1}</p>
+                      <h3 className="text-xl md:text-2xl font-bold text-gray-900">{stepItems[currentStep].title}</h3>
+                    </div>
+                  </div>
+                  <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                    {currentStep === 0 && 'Mulai dengan membentuk AI operator yang benar-benar sesuai kebutuhan bisnis dan timmu.'}
+                    {currentStep === 1 && 'Pilih 2 layanan utama dan 2 layanan pendukung agar agent fokus pada pekerjaan yang paling berdampak.'}
+                    {currentStep === 2 && 'Tentukan bagaimana agent bekerja di WhatsApp. Setiap peran yang dipilih akan membentuk perilaku operasional agent.'}
+                    {currentStep === 3 && 'Pilih tools dan aplikasi yang paling penting untuk terhubung ke agent agar alur kerja berjalan otomatis.'}
+                    {currentStep === 4 && 'Lihat kombinasi akhir assistant-mu dan hasil yang akan dicapai ketika seluruh alur sudah aktif.'}
+                  </p>
+                </div>
+
+                {currentStep === 0 && (
+                  <div className="rounded-3xl border border-yellow-100 bg-[linear-gradient(135deg,rgba(253,209,0,0.12),rgba(255,255,255,0.8))] p-5 md:p-6">
+                    <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-5 items-start">
+                      <div>
+                        <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                          Agent dibangun sebagai personal AI operator yang siap menerima role utama dan support role.
+                        </p>
+                        <div className="space-y-2.5">
+                          {['Custom workflow behavior', 'Business-context response', 'Scalable automation foundation'].map((item) => (
+                            <div key={item} className="flex items-center gap-2 text-sm text-gray-700">
+                              <Check size={15} className="text-gray-900" />
+                              {item}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="rounded-3xl bg-white border border-yellow-100 p-5 shadow-sm">
+                        <div className="w-14 h-14 rounded-2xl bg-yellow-100 flex items-center justify-center mb-4">
+                          <Bot size={24} className="text-gray-900" />
+                        </div>
+                        <p className="text-sm font-semibold text-gray-900 mb-1">EliteVA Core Agent</p>
+                        <p className="text-sm text-gray-500">Siap menerima role utama, support capability, dan koneksi ke apps kerja.</p>
                       </div>
                     </div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">See the outcome clearly</h3>
-                    <p className="text-sm text-gray-800 leading-relaxed mb-4">
-                      Elite Virtual Assistant menjalankan kombinasi fokus yang kamu pilih dan membantu scale up pekerjaan secara konsisten.
-                    </p>
-                    <div className="rounded-2xl border border-white/60 bg-white/50 p-4 mb-4">
-                      <p className="text-[11px] font-bold tracking-[0.18em] uppercase text-gray-500 mb-2">Your current setup</p>
-                      <div className="flex items-start gap-3 mb-3">
-                        <div className="w-9 h-9 rounded-xl bg-white/70 flex items-center justify-center">
-                          <Workflow size={16} className="text-gray-900" />
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-gray-900">Primary</p>
+                  </div>
+                )}
+
+                {currentStep === 1 && (
+                  <div className="space-y-5">
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Primary focus · pilih 2</p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {primaryOptions.map((item) => {
+                          const Icon = item.icon;
+                          const active = selectedPrimary.includes(item.id);
+                          return (
+                            <button
+                              key={item.id}
+                              type="button"
+                              onClick={() => toggleSelection(selectedPrimary, item.id, setSelectedPrimary)}
+                              className={`rounded-2xl border p-4 text-left transition-all duration-200 ${
+                                active ? 'border-yellow-300 bg-yellow-50 shadow-[0_12px_30px_rgba(253,209,0,0.16)]' : 'border-gray-200 bg-white hover:border-yellow-200'
+                              }`}
+                            >
+                              <div className="flex items-start gap-3">
+                                <div className={`w-11 h-11 rounded-2xl flex items-center justify-center ${item.bg} ${item.color}`}>
+                                  <Icon size={18} />
+                                </div>
+                                <div className="flex-1">
+                                  <div className="flex items-center justify-between gap-3">
+                                    <p className="text-sm font-semibold text-gray-900">{item.label}</p>
+                                    {active && <span className="text-[10px] font-bold tracking-widest uppercase text-gray-900">Selected</span>}
+                                  </div>
+                                  <p className="text-xs text-gray-500 mt-1">{item.desc}</p>
+                                </div>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Support focus · pilih 2</p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {supportOptions.map((item) => {
+                          const Icon = item.icon;
+                          const active = selectedSupport.includes(item.id);
+                          return (
+                            <button
+                              key={item.id}
+                              type="button"
+                              onClick={() => toggleSelection(selectedSupport, item.id, setSelectedSupport)}
+                              className={`rounded-2xl border p-4 text-left transition-all duration-200 ${
+                                active ? 'border-yellow-300 bg-yellow-50 shadow-[0_12px_30px_rgba(253,209,0,0.16)]' : 'border-gray-200 bg-white hover:border-yellow-200'
+                              }`}
+                            >
+                              <div className="flex items-start gap-3">
+                                <div className={`w-11 h-11 rounded-2xl flex items-center justify-center ${item.bg} ${item.color}`}>
+                                  <Icon size={18} />
+                                </div>
+                                <div className="flex-1">
+                                  <div className="flex items-center justify-between gap-3">
+                                    <p className="text-sm font-semibold text-gray-900">{item.label}</p>
+                                    {active && <span className="text-[10px] font-bold tracking-widest uppercase text-gray-900">Selected</span>}
+                                  </div>
+                                  <p className="text-xs text-gray-500 mt-1">{item.desc}</p>
+                                </div>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {currentStep === 2 && (
+                  <div className="space-y-4">
+                    <p className="text-xs font-bold uppercase tracking-widest text-gray-400">WhatsApp roles · pilih sampai 2</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {channelOptions.map((item) => {
+                        const Icon = item.icon;
+                        const active = selectedChannels.includes(item.id);
+                        return (
+                          <button
+                            key={item.id}
+                            type="button"
+                            onClick={() => toggleLimitedSelection(selectedChannels, item.id, setSelectedChannels, 2)}
+                            className={`rounded-2xl border p-4 text-left transition-all duration-200 ${
+                              active ? 'border-yellow-300 bg-yellow-50 shadow-[0_12px_30px_rgba(253,209,0,0.16)]' : 'border-gray-200 bg-white hover:border-yellow-200'
+                            }`}
+                          >
+                            <div className="flex items-start gap-3">
+                              <div className={`w-11 h-11 rounded-2xl flex items-center justify-center ${item.bg} ${item.color}`}>
+                                <Icon size={18} />
+                              </div>
+                              <div className="flex-1">
+                                <div className="flex items-center justify-between gap-3">
+                                  <p className="text-sm font-semibold text-gray-900">{item.label}</p>
+                                  {active && <span className="text-[10px] font-bold tracking-widest uppercase text-gray-900">Selected</span>}
+                                </div>
+                                <p className="text-xs text-gray-500 mt-1">{item.desc}</p>
+                              </div>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Active WhatsApp behavior</p>
+                      <p className="text-sm text-gray-700">{selectedChannelLabels.join(' + ')}</p>
+                    </div>
+                  </div>
+                )}
+
+                {currentStep === 3 && (
+                  <div className="space-y-4">
+                    <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Connected tools · pilih sampai 4</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {ecosystemOptions.map((item) => {
+                        const Icon = item.icon;
+                        const active = selectedIntegrations.includes(item.id);
+                        return (
+                          <button
+                            key={item.id}
+                            type="button"
+                            onClick={() => toggleLimitedSelection(selectedIntegrations, item.id, setSelectedIntegrations, 4)}
+                            className={`rounded-2xl border p-4 text-left transition-all duration-200 ${
+                              active ? 'border-yellow-300 bg-yellow-50 shadow-[0_12px_30px_rgba(253,209,0,0.16)]' : 'border-gray-200 bg-white hover:border-yellow-200'
+                            }`}
+                          >
+                            <div className="flex items-start gap-3">
+                              <div className={`w-11 h-11 rounded-2xl flex items-center justify-center ${item.bg} ${item.color}`}>
+                                <Icon size={18} />
+                              </div>
+                              <div className="flex-1">
+                                <div className="flex items-center justify-between gap-3">
+                                  <p className="text-sm font-semibold text-gray-900">{item.label}</p>
+                                  {active && <span className="text-[10px] font-bold tracking-widest uppercase text-gray-900">Selected</span>}
+                                </div>
+                                <p className="text-xs text-gray-500 mt-1">Connected into the agent workflow</p>
+                              </div>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Connected ecosystem</p>
+                      <p className="text-sm text-gray-700">{selectedIntegrationLabels.join(' + ')}</p>
+                    </div>
+                  </div>
+                )}
+
+                {currentStep === 4 && (
+                  <div className="space-y-5">
+                    <div className="rounded-3xl border border-yellow-200 p-5 shadow-[0_20px_45px_rgba(253,209,0,0.12)]" style={{ background: 'linear-gradient(135deg, rgba(253,209,0,0.16) 0%, rgba(255,255,255,0.82) 100%)' }}>
+                      <p className="text-[11px] font-bold tracking-[0.18em] uppercase text-gray-500 mb-3">Your EliteVA setup</p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="rounded-2xl bg-white/80 border border-white p-4">
+                          <p className="text-sm font-semibold text-gray-900 mb-1">Primary focus</p>
                           <p className="text-sm text-gray-700">{selectedPrimaryLabels.join(' + ')}</p>
                         </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-white/70 flex items-center justify-center">
-                          <PlugZap size={16} className="text-gray-900" />
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-gray-900">Support</p>
+                        <div className="rounded-2xl bg-white/80 border border-white p-4">
+                          <p className="text-sm font-semibold text-gray-900 mb-1">Support focus</p>
                           <p className="text-sm text-gray-700">{selectedSupportLabels.join(' + ')}</p>
+                        </div>
+                        <div className="rounded-2xl bg-white/80 border border-white p-4">
+                          <p className="text-sm font-semibold text-gray-900 mb-1">WhatsApp role</p>
+                          <p className="text-sm text-gray-700">{selectedChannelLabels.join(' + ')}</p>
+                        </div>
+                        <div className="rounded-2xl bg-white/80 border border-white p-4">
+                          <p className="text-sm font-semibold text-gray-900 mb-1">Connected tools</p>
+                          <p className="text-sm text-gray-700">{selectedIntegrationLabels.join(' + ')}</p>
                         </div>
                       </div>
                     </div>
-                    <div className="space-y-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {[
                         'Faster response time',
                         'Less repetitive manual work',
                         'Stronger follow-up consistency',
                         'Higher team capacity to scale',
                       ].map((item) => (
-                        <div key={item} className="flex items-center gap-2 text-sm font-medium text-gray-900">
+                        <div key={item} className="flex items-center gap-2 rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-900">
                           <Check size={15} />
                           {item}
                         </div>
                       ))}
                     </div>
                   </div>
+                )}
+
+                <div className="mt-8 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentStep((prev) => Math.max(0, prev - 1))}
+                    disabled={currentStep === 0}
+                    className="px-5 py-3 rounded-full border border-gray-200 text-sm font-semibold text-gray-700 hover:border-yellow-300 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Back
+                  </button>
+                  <div className="flex items-center gap-2 self-center">
+                    {stepItems.map((_, index) => (
+                      <button
+                        key={index}
+                        type="button"
+                        onClick={() => setCurrentStep(index)}
+                        className={`h-2.5 rounded-full transition-all duration-300 ${
+                          index === currentStep ? 'w-8 bg-gray-900' : index < currentStep ? 'w-5 bg-yellow-400' : 'w-2.5 bg-yellow-200'
+                        }`}
+                        aria-label={`Go to step ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentStep((prev) => Math.min(stepItems.length - 1, prev + 1))}
+                    className="px-6 py-3 rounded-full text-sm font-bold text-gray-900 hover:opacity-90 transition-opacity"
+                    style={{ background: '#fdd100' }}
+                  >
+                    {currentStep === stepItems.length - 1 ? 'Done' : 'Next Step'}
+                  </button>
                 </div>
               </div>
             </div>
