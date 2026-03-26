@@ -17,7 +17,7 @@ const navItems = [
 ];
 
 const stats = [
-  { value: '500+', label: 'Active Clients' },
+  { value: '125+', label: 'Growing Clients' },
   { value: '98%', label: 'Satisfaction Rate' },
   { value: '24/7', label: 'Available Support' },
   { value: '10x', label: 'Faster Processing' },
@@ -270,10 +270,10 @@ const HowItWorksSection: React.FC = () => {
   ];
 
   const channelOptions = [
-    { id: 'lead-response', label: 'Lead Response', desc: 'Reply cepat ke prospect masuk', icon: MessageCircle, color: 'text-green-600', bg: 'bg-green-100' },
-    { id: 'auto-reminder', label: 'Auto Reminder', desc: 'Reminder jadwal dan follow-up', icon: Bell, color: 'text-orange-500', bg: 'bg-orange-100' },
-    { id: 'customer-support', label: 'Customer Support', desc: 'FAQ dan inbound service', icon: Headphones, color: 'text-blue-600', bg: 'bg-blue-100' },
-    { id: 'broadcast', label: 'Broadcast Follow-up', desc: 'Reach out massal dengan konteks', icon: Zap, color: 'text-yellow-600', bg: 'bg-yellow-100' },
+    { id: 'lead-response', label: 'Lead Response', desc: 'Fast reply to incoming prospects', icon: MessageCircle, color: 'text-green-600', bg: 'bg-green-100' },
+    { id: 'auto-reminder', label: 'Auto Reminder', desc: 'Schedule reminders and follow-ups', icon: Bell, color: 'text-orange-500', bg: 'bg-orange-100' },
+    { id: 'customer-support', label: 'Customer Support', desc: 'FAQ handling and inbound service', icon: Headphones, color: 'text-blue-600', bg: 'bg-blue-100' },
+    { id: 'broadcast', label: 'Broadcast Follow-up', desc: 'Mass outreach with context', icon: Zap, color: 'text-yellow-600', bg: 'bg-yellow-100' },
   ];
 
   const ecosystemOptions = [
@@ -288,11 +288,11 @@ const HowItWorksSection: React.FC = () => {
   ];
 
   const stepItems = [
-    { title: 'Create Agent', subtitle: 'Buat AI agent sesuai workflow', icon: UserPlus },
-    { title: 'Connect Tools', subtitle: 'Hubungkan app & ecosystem', icon: PlugZap },
-    { title: 'Pick Focus', subtitle: 'Pilih layanan utama & support', icon: Target },
-    { title: 'WhatsApp Flow', subtitle: 'Tentukan peran agent di WhatsApp', icon: MessageCircle },
-    { title: 'Scale Outcome', subtitle: 'Lihat hasil assistant kamu', icon: Rocket },
+    { title: 'Create Agent', subtitle: 'Build your AI agent for your workflow', icon: UserPlus },
+    { title: 'Connect Tools', subtitle: 'Link your apps & ecosystem', icon: PlugZap },
+    { title: 'Pick Focus', subtitle: 'Choose primary & support services', icon: Target },
+    { title: 'WhatsApp Flow', subtitle: 'Set your agent role on WhatsApp', icon: MessageCircle },
+    { title: 'Scale Outcome', subtitle: 'See what your assistant achieves', icon: Rocket },
   ];
 
   const selectedPrimaryLabels = primaryOptions.filter((item) => selectedPrimary.includes(item.id)).map((item) => item.label);
@@ -318,7 +318,7 @@ const HowItWorksSection: React.FC = () => {
                 Build the right agent, connect the right tools, reach the right outcome
               </h2>
               <p className="text-sm md:text-base text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Flow dibuat lebih jelas: create agent dulu, hubungkan tools kerja, lalu tentukan fokus layanan dan flow channel sebelum masuk ke hasil akhir.
+                The flow is clear: create your agent first, connect your tools, define your service focus and channel behavior, then see the full outcome.
               </p>
             </div>
 
@@ -387,11 +387,11 @@ const HowItWorksSection: React.FC = () => {
                     </div>
                   </div>
                   <p className="text-sm md:text-base text-gray-600 leading-relaxed">
-                    {currentStep === 0 && 'Mulai dengan membentuk AI operator yang benar-benar sesuai kebutuhan bisnis dan timmu.'}
-                    {currentStep === 1 && 'Pilih tools dan aplikasi yang paling penting untuk terhubung ke agent agar alur kerja berjalan otomatis.'}
-                    {currentStep === 2 && 'Pilih 2 layanan utama dan 2 layanan pendukung agar agent fokus pada pekerjaan yang paling berdampak.'}
-                    {currentStep === 3 && 'Tentukan bagaimana agent bekerja di WhatsApp. Setiap peran yang dipilih akan membentuk perilaku operasional agent.'}
-                    {currentStep === 4 && 'Lihat kombinasi akhir assistant-mu dan hasil yang akan dicapai ketika seluruh alur sudah aktif.'}
+                  {currentStep === 0 && 'Start by shaping an AI operator that truly fits your business and team needs.'}
+                    {currentStep === 1 && 'Select the tools and apps most critical to connect to the agent so your workflow runs automatically.'}
+                    {currentStep === 2 && 'Pick 2 primary and 2 support services so the agent stays focused on the highest-impact work.'}
+                    {currentStep === 3 && 'Define how the agent operates on WhatsApp. Each selected role shapes the agent\'s operational behavior.'}
+                    {currentStep === 4 && 'See your final assistant setup and the outcomes you\'ll achieve once the full flow is live.'}
                   </p>
                 </div>
 
@@ -400,7 +400,7 @@ const HowItWorksSection: React.FC = () => {
                     <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-5 items-start">
                       <div>
                         <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                          Agent dibangun sebagai personal AI operator yang siap menerima role utama dan support role.
+                          The agent is built as a personal AI operator ready to take on primary and support roles.
                         </p>
                         <div className="space-y-2.5">
                           {['Custom workflow behavior', 'Business-context response', 'Scalable automation foundation'].map((item) => (
@@ -416,7 +416,7 @@ const HowItWorksSection: React.FC = () => {
                           <Bot size={24} className="text-gray-900" />
                         </div>
                         <p className="text-sm font-semibold text-gray-900 mb-1">EliteVA Core Agent</p>
-                        <p className="text-sm text-gray-500">Siap menerima role utama, support capability, dan koneksi ke apps kerja.</p>
+                        <p className="text-sm text-gray-500">Ready for primary roles, support capabilities, and connections to your work apps.</p>
                       </div>
                     </div>
                   </div>
@@ -425,7 +425,7 @@ const HowItWorksSection: React.FC = () => {
                 {currentStep === 1 && (
                   <div className="rounded-3xl border border-gray-100 bg-white p-5 md:p-6 shadow-sm">
                     <div className="space-y-4">
-                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Connected tools · pilih sampai 4</p>
+                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Connected tools · pick up to 4</p>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {ecosystemOptions.map((item) => {
                           const Icon = item.icon;
@@ -466,7 +466,7 @@ const HowItWorksSection: React.FC = () => {
                 {currentStep === 2 && (
                   <div className="space-y-5">
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Primary focus · pilih 2</p>
+                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Primary focus · pick 2</p>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {primaryOptions.map((item) => {
                           const Icon = item.icon;
@@ -498,7 +498,7 @@ const HowItWorksSection: React.FC = () => {
                       </div>
                     </div>
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Support focus · pilih 2</p>
+                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Support focus · pick 2</p>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {supportOptions.map((item) => {
                           const Icon = item.icon;
@@ -534,7 +534,7 @@ const HowItWorksSection: React.FC = () => {
 
                 {currentStep === 3 && (
                   <div className="space-y-4">
-                    <p className="text-xs font-bold uppercase tracking-widest text-gray-400">WhatsApp roles · pilih sampai 2</p>
+                    <p className="text-xs font-bold uppercase tracking-widest text-gray-400">WhatsApp roles · pick up to 2</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {channelOptions.map((item) => {
                         const Icon = item.icon;
@@ -755,7 +755,7 @@ const CTABanner: React.FC = () => (
         to="/pricing"
         className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gray-900 text-white font-bold hover:bg-gray-800 transition-colors shadow-lg"
       >
-        Lihat Paket Harga <ArrowRight size={16} />
+        View Pricing Plans <ArrowRight size={16} />
       </Link>
     </div>
   </section>
@@ -774,7 +774,6 @@ const EVFooter: React.FC = () => (
         Online Support to Scale Up Your Business and make it a{' '}
         <span className="font-bold text-gray-800">Betterworks</span>
       </p>
-      <p className="text-sm text-gray-400">@hapx_digital</p>
     </div>
   </footer>
 );

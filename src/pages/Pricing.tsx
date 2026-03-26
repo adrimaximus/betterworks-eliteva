@@ -32,9 +32,8 @@ const plans = [
       'All Starter features',
       'WhatsApp automation',
       'Smart reminders',
-      'Sheet dashboards',
       'Priority support',
-      '5 user seats',
+      '1 user seat',
     ],
     cta: 'Start Free Trial',
     ctaStyle: 'dark',
@@ -51,7 +50,7 @@ const plans = [
       'Web scraping tools',
       'Custom integrations',
       'Dedicated account manager',
-      'Unlimited user seats',
+      '3 user seats',
     ],
     cta: 'Contact Sales',
     ctaStyle: 'dark-filled',
@@ -89,7 +88,7 @@ const PricingNavbar: React.FC = () => (
         className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors"
       >
         <ArrowLeft size={15} />
-        <span className="hidden sm:inline">Kembali ke Landing</span>
+          <span className="hidden sm:inline">Back to Landing</span>
       </Link>
     </div>
   </nav>
@@ -297,7 +296,6 @@ const PricingFooter: React.FC = () => (
         </div>
         <span className="font-bold text-gray-900">EliteVA</span>
       </Link>
-      <p className="text-sm text-gray-400">@hapx_digital</p>
     </div>
   </footer>
 );
