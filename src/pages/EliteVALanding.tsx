@@ -4,7 +4,7 @@ import {
   Code2, Bot, Mail, Calendar, Cloud, Table, Map, Terminal,
   Database, Bell, MessageSquare, Users, DollarSign, LayoutDashboard,
   Headphones, ShoppingCart, Globe, Check, Play, Zap, ArrowRight,
-  UserPlus, Target, MessageCircle, PlugZap, Rocket, Workflow
+  UserPlus, Target, MessageCircle, PlugZap, Rocket, Workflow, LogIn
 } from 'lucide-react';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -134,14 +134,24 @@ const EVNavbar: React.FC = () => (
         ))}
       </ul>
 
-      {/* CTA — visible on all sizes */}
-      <Link
-        to="/pricing"
-        className="inline-flex items-center px-4 md:px-5 py-2 rounded-full text-gray-900 text-sm font-bold hover:opacity-90 transition-opacity"
-        style={{ background: '#fdd100' }}
-      >
-        Get Started
-      </Link>
+      <div className="flex items-center gap-2">
+        {/* Login */}
+        <Link
+          to="/admin"
+          className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-gray-200 text-gray-700 text-sm font-semibold hover:border-yellow-300 transition-colors"
+        >
+          <LogIn size={14} />
+          Login
+        </Link>
+        {/* CTA — visible on all sizes */}
+        <Link
+          to="/pricing"
+          className="inline-flex items-center px-4 md:px-5 py-2 rounded-full text-gray-900 text-sm font-bold hover:opacity-90 transition-opacity"
+          style={{ background: '#fdd100' }}
+        >
+          Get Started
+        </Link>
+      </div>
     </div>
   </nav>
 );
