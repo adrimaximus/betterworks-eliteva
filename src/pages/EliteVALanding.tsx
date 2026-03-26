@@ -192,26 +192,22 @@ const HeroSection: React.FC = () => (
           </div>
         </div>
 
-        {/* Right: decorative AI visual */}
-        <div className="relative flex items-center justify-center min-h-[260px] sm:min-h-[320px] lg:min-h-[340px]">
-          {/* Outer glow circle */}
-          <div className="absolute w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full border border-yellow-100" style={{ background: 'rgba(253,209,0,0.07)' }} />
-          <div className="absolute w-44 h-44 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full border border-yellow-200" style={{ background: 'rgba(253,209,0,0.13)' }} />
+        {/* Right: hero image visual */}
+        <div className="relative flex items-end justify-center min-h-[320px] sm:min-h-[420px] lg:min-h-[560px]">
+          <div className="absolute w-56 h-56 sm:w-80 sm:h-80 lg:w-[28rem] lg:h-[28rem] rounded-full border border-yellow-100" style={{ background: 'rgba(253,209,0,0.07)' }} />
+          <div className="absolute w-44 h-44 sm:w-64 sm:h-64 lg:w-80 lg:h-80 rounded-full border border-yellow-200" style={{ background: 'rgba(253,209,0,0.13)' }} />
 
-          {/* Center avatar */}
-          <div
-            className="relative z-10 w-36 h-36 sm:w-44 sm:h-44 lg:w-48 lg:h-48 rounded-full flex items-center justify-center shadow-2xl"
-            style={{ background: 'linear-gradient(135deg, #fdd100 0%, #e6a800 100%)', boxShadow: '0 20px 60px rgba(253,209,0,0.35)' }}
-          >
-            <Bot size={56} className="text-gray-900 sm:hidden" />
-            <Bot size={72} className="text-gray-900 hidden sm:block" />
-          </div>
+          <img
+            src="/eliteva-hero.png"
+            alt="EliteVA AI assistant"
+            className="relative z-10 w-[260px] sm:w-[360px] lg:w-[520px] h-auto object-contain drop-shadow-[0_20px_60px_rgba(17,24,39,0.22)]"
+          />
 
           {/* Floating badges — hidden on xs, show on sm+ */}
-          <div className="hidden sm:flex absolute top-4 right-6 lg:top-6 lg:right-4 bg-white rounded-2xl px-3 py-2 shadow-lg items-center gap-2 text-xs sm:text-sm font-semibold text-gray-700">
+          <div className="hidden sm:flex absolute top-6 right-2 lg:top-10 lg:right-4 bg-white rounded-2xl px-3 py-2 shadow-lg items-center gap-2 text-xs sm:text-sm font-semibold text-gray-700">
             <span className="text-green-500">●</span> Always Active
           </div>
-          <div className="hidden sm:flex absolute bottom-4 left-6 lg:bottom-8 lg:left-4 bg-white rounded-2xl px-3 py-2 shadow-lg items-center gap-2 text-xs sm:text-sm font-semibold text-gray-700">
+          <div className="hidden sm:flex absolute bottom-8 left-4 lg:bottom-14 lg:left-2 bg-white rounded-2xl px-3 py-2 shadow-lg items-center gap-2 text-xs sm:text-sm font-semibold text-gray-700">
             <Zap size={13} style={{ color: '#fdd100' }} /> AI-Powered
           </div>
         </div>
