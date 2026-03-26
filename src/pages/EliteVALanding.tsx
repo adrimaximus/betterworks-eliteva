@@ -237,49 +237,6 @@ const HowItWorksSection: React.FC = () => {
     setter([...current, value]);
   };
 
-  const primaryOptions = [
-    { id: 'customer-service', label: 'Customer Service', desc: 'Handle inbound chat & FAQs', icon: Headphones, color: 'text-blue-600', bg: 'bg-blue-100' },
-    { id: 'whatsapp', label: 'WhatsApp Automation', desc: 'Blast, reply, reminder flow', icon: MessageCircle, color: 'text-green-600', bg: 'bg-green-100' },
-    { id: 'lead-qualification', label: 'Lead Qualification', desc: 'Screen prospects automatically', icon: Users, color: 'text-purple-600', bg: 'bg-purple-100' },
-    { id: 'order-handling', label: 'Order Handling', desc: 'Track and process requests', icon: ShoppingCart, color: 'text-pink-600', bg: 'bg-pink-100' },
-  ];
-  const channelOptions = [
-    { id: 'lead-response', label: 'Lead Response', desc: 'Reply cepat ke prospect masuk', icon: MessageCircle, color: 'text-green-600', bg: 'bg-green-100' },
-    { id: 'auto-reminder', label: 'Auto Reminder', desc: 'Reminder jadwal dan follow-up', icon: Bell, color: 'text-orange-500', bg: 'bg-orange-100' },
-    { id: 'customer-support', label: 'Customer Support', desc: 'FAQ dan inbound service', icon: Headphones, color: 'text-blue-600', bg: 'bg-blue-100' },
-    { id: 'broadcast', label: 'Broadcast Follow-up', desc: 'Reach out massal dengan konteks', icon: Zap, color: 'text-yellow-600', bg: 'bg-yellow-100' },
-  ];
-  const stepItems = [
-    { title: 'Create Agent', subtitle: 'Buat AI agent sesuai workflow', icon: UserPlus },
-    { title: 'Pick Focus', subtitle: 'Pilih layanan utama & support', icon: Target },
-    { title: 'WhatsApp Flow', subtitle: 'Tentukan peran agent di WhatsApp', icon: MessageCircle },
-    { title: 'Connect Tools', subtitle: 'Hubungkan app & ecosystem', icon: PlugZap },
-    { title: 'Scale Outcome', subtitle: 'Lihat hasil assistant kamu', icon: Rocket },
-  ];
-
-  const supportOptions = [
-    { id: 'email-followup', label: 'Email Follow-up', desc: 'Auto nurture & reminders', icon: Mail, color: 'text-red-500', bg: 'bg-red-100' },
-    { id: 'dashboard', label: 'Dashboard Reporting', desc: 'Summary and performance view', icon: LayoutDashboard, color: 'text-indigo-600', bg: 'bg-indigo-100' },
-    { id: 'calendar', label: 'Calendar Scheduling', desc: 'Booking and task cadence', icon: Calendar, color: 'text-sky-600', bg: 'bg-sky-100' },
-    { id: 'data-entry', label: 'Data Entry', desc: 'Capture into tools automatically', icon: Database, color: 'text-cyan-600', bg: 'bg-cyan-100' },
-  ];
-
-  const ecosystemOptions = [
-    { id: 'apis', label: 'APIs', icon: Code2, color: 'text-purple-600', bg: 'bg-purple-100' },
-    { id: 'gmail', label: 'Gmail', icon: Mail, color: 'text-red-500', bg: 'bg-red-100' },
-    { id: 'google-drive', label: 'Google Drive', icon: Cloud, color: 'text-yellow-600', bg: 'bg-yellow-100' },
-    { id: 'calendar', label: 'Calendar', icon: Calendar, color: 'text-blue-500', bg: 'bg-blue-100' },
-    { id: 'sheets', label: 'Sheets', icon: Table, color: 'text-green-600', bg: 'bg-green-100' },
-    { id: 'maps', label: 'Maps', icon: Map, color: 'text-teal-600', bg: 'bg-teal-100' },
-    { id: 'terminal', label: 'Terminal', icon: Terminal, color: 'text-gray-700', bg: 'bg-gray-100' },
-    { id: 'crm', label: 'CRM', icon: Users, color: 'text-indigo-600', bg: 'bg-indigo-100' },
-  ];
-
-  const selectedPrimaryLabels = primaryOptions.filter((item) => selectedPrimary.includes(item.id)).map((item) => item.label);
-  const selectedSupportLabels = supportOptions.filter((item) => selectedSupport.includes(item.id)).map((item) => item.label);
-  const selectedChannelLabels = channelOptions.filter((item) => selectedChannels.includes(item.id)).map((item) => item.label);
-  const selectedIntegrationLabels = ecosystemOptions.filter((item) => selectedIntegrations.includes(item.id)).map((item) => item.label);
-
   const toggleLimitedSelection = (
     current: string[],
     value: string,
@@ -297,6 +254,51 @@ const HowItWorksSection: React.FC = () => {
     }
     setter([...current, value]);
   };
+
+  const primaryOptions = [
+    { id: 'customer-service', label: 'Customer Service', desc: 'Handle inbound chat & FAQs', icon: Headphones, color: 'text-blue-600', bg: 'bg-blue-100' },
+    { id: 'whatsapp', label: 'WhatsApp Automation', desc: 'Blast, reply, reminder flow', icon: MessageCircle, color: 'text-green-600', bg: 'bg-green-100' },
+    { id: 'lead-qualification', label: 'Lead Qualification', desc: 'Screen prospects automatically', icon: Users, color: 'text-purple-600', bg: 'bg-purple-100' },
+    { id: 'order-handling', label: 'Order Handling', desc: 'Track and process requests', icon: ShoppingCart, color: 'text-pink-600', bg: 'bg-pink-100' },
+  ];
+
+  const supportOptions = [
+    { id: 'email-followup', label: 'Email Follow-up', desc: 'Auto nurture & reminders', icon: Mail, color: 'text-red-500', bg: 'bg-red-100' },
+    { id: 'dashboard', label: 'Dashboard Reporting', desc: 'Summary and performance view', icon: LayoutDashboard, color: 'text-indigo-600', bg: 'bg-indigo-100' },
+    { id: 'calendar', label: 'Calendar Scheduling', desc: 'Booking and task cadence', icon: Calendar, color: 'text-sky-600', bg: 'bg-sky-100' },
+    { id: 'data-entry', label: 'Data Entry', desc: 'Capture into tools automatically', icon: Database, color: 'text-cyan-600', bg: 'bg-cyan-100' },
+  ];
+
+  const channelOptions = [
+    { id: 'lead-response', label: 'Lead Response', desc: 'Reply cepat ke prospect masuk', icon: MessageCircle, color: 'text-green-600', bg: 'bg-green-100' },
+    { id: 'auto-reminder', label: 'Auto Reminder', desc: 'Reminder jadwal dan follow-up', icon: Bell, color: 'text-orange-500', bg: 'bg-orange-100' },
+    { id: 'customer-support', label: 'Customer Support', desc: 'FAQ dan inbound service', icon: Headphones, color: 'text-blue-600', bg: 'bg-blue-100' },
+    { id: 'broadcast', label: 'Broadcast Follow-up', desc: 'Reach out massal dengan konteks', icon: Zap, color: 'text-yellow-600', bg: 'bg-yellow-100' },
+  ];
+
+  const ecosystemOptions = [
+    { id: 'apis', label: 'APIs', icon: Code2, color: 'text-purple-600', bg: 'bg-purple-100' },
+    { id: 'gmail', label: 'Gmail', icon: Mail, color: 'text-red-500', bg: 'bg-red-100' },
+    { id: 'google-drive', label: 'Google Drive', icon: Cloud, color: 'text-yellow-600', bg: 'bg-yellow-100' },
+    { id: 'calendar', label: 'Calendar', icon: Calendar, color: 'text-blue-500', bg: 'bg-blue-100' },
+    { id: 'sheets', label: 'Sheets', icon: Table, color: 'text-green-600', bg: 'bg-green-100' },
+    { id: 'maps', label: 'Maps', icon: Map, color: 'text-teal-600', bg: 'bg-teal-100' },
+    { id: 'terminal', label: 'Terminal', icon: Terminal, color: 'text-gray-700', bg: 'bg-gray-100' },
+    { id: 'crm', label: 'CRM', icon: Users, color: 'text-indigo-600', bg: 'bg-indigo-100' },
+  ];
+
+  const stepItems = [
+    { title: 'Create Agent', subtitle: 'Buat AI agent sesuai workflow', icon: UserPlus },
+    { title: 'Connect Tools', subtitle: 'Hubungkan app & ecosystem', icon: PlugZap },
+    { title: 'Pick Focus', subtitle: 'Pilih layanan utama & support', icon: Target },
+    { title: 'WhatsApp Flow', subtitle: 'Tentukan peran agent di WhatsApp', icon: MessageCircle },
+    { title: 'Scale Outcome', subtitle: 'Lihat hasil assistant kamu', icon: Rocket },
+  ];
+
+  const selectedPrimaryLabels = primaryOptions.filter((item) => selectedPrimary.includes(item.id)).map((item) => item.label);
+  const selectedSupportLabels = supportOptions.filter((item) => selectedSupport.includes(item.id)).map((item) => item.label);
+  const selectedChannelLabels = channelOptions.filter((item) => selectedChannels.includes(item.id)).map((item) => item.label);
+  const selectedIntegrationLabels = ecosystemOptions.filter((item) => selectedIntegrations.includes(item.id)).map((item) => item.label);
 
   return (
     <section id="how-it-works" className="pt-10 md:pt-16 pb-20 md:pb-24 bg-white">
@@ -316,10 +318,10 @@ const HowItWorksSection: React.FC = () => {
                 Build the right agent, connect the right tools, reach the right outcome
               </h2>
               <p className="text-sm md:text-base text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Flow dibuat lebih jelas: dari agent creation, pilih fokus layanan, masuk ke WhatsApp, connect ke tools kerja,
-                lalu berujung pada assistant yang benar-benar membantu scale up pekerjaan tim.
+                Flow dibuat lebih jelas: create agent dulu, hubungkan tools kerja, lalu tentukan fokus layanan dan flow channel sebelum masuk ke hasil akhir.
               </p>
             </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-6 lg:gap-8">
               <div className="rounded-[1.8rem] border border-yellow-100 bg-white/80 p-4 md:p-5 shadow-[0_18px_40px_rgba(17,24,39,0.05)] backdrop-blur">
                 <div className="space-y-3">
@@ -374,9 +376,9 @@ const HowItWorksSection: React.FC = () => {
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-12 h-12 rounded-2xl bg-yellow-100 flex items-center justify-center text-gray-900 shadow-sm">
                       {currentStep === 0 && <UserPlus size={20} />}
-                      {currentStep === 1 && <Target size={20} />}
-                      {currentStep === 2 && <MessageCircle size={20} />}
-                      {currentStep === 3 && <PlugZap size={20} />}
+                      {currentStep === 1 && <PlugZap size={20} />}
+                      {currentStep === 2 && <Target size={20} />}
+                      {currentStep === 3 && <MessageCircle size={20} />}
                       {currentStep === 4 && <Rocket size={20} />}
                     </div>
                     <div>
@@ -386,9 +388,9 @@ const HowItWorksSection: React.FC = () => {
                   </div>
                   <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                     {currentStep === 0 && 'Mulai dengan membentuk AI operator yang benar-benar sesuai kebutuhan bisnis dan timmu.'}
-                    {currentStep === 1 && 'Pilih 2 layanan utama dan 2 layanan pendukung agar agent fokus pada pekerjaan yang paling berdampak.'}
-                    {currentStep === 2 && 'Tentukan bagaimana agent bekerja di WhatsApp. Setiap peran yang dipilih akan membentuk perilaku operasional agent.'}
-                    {currentStep === 3 && 'Pilih tools dan aplikasi yang paling penting untuk terhubung ke agent agar alur kerja berjalan otomatis.'}
+                    {currentStep === 1 && 'Pilih tools dan aplikasi yang paling penting untuk terhubung ke agent agar alur kerja berjalan otomatis.'}
+                    {currentStep === 2 && 'Pilih 2 layanan utama dan 2 layanan pendukung agar agent fokus pada pekerjaan yang paling berdampak.'}
+                    {currentStep === 3 && 'Tentukan bagaimana agent bekerja di WhatsApp. Setiap peran yang dipilih akan membentuk perilaku operasional agent.'}
                     {currentStep === 4 && 'Lihat kombinasi akhir assistant-mu dan hasil yang akan dicapai ketika seluruh alur sudah aktif.'}
                   </p>
                 </div>
@@ -421,6 +423,47 @@ const HowItWorksSection: React.FC = () => {
                 )}
 
                 {currentStep === 1 && (
+                  <div className="rounded-3xl border border-gray-100 bg-white p-5 md:p-6 shadow-sm">
+                    <div className="space-y-4">
+                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Connected tools · pilih sampai 4</p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {ecosystemOptions.map((item) => {
+                          const Icon = item.icon;
+                          const active = selectedIntegrations.includes(item.id);
+                          return (
+                            <button
+                              key={item.id}
+                              type="button"
+                              onClick={() => toggleLimitedSelection(selectedIntegrations, item.id, setSelectedIntegrations, 4)}
+                              className={`rounded-2xl border p-4 text-left transition-all duration-200 ${
+                                active ? 'border-yellow-300 bg-yellow-50 shadow-[0_12px_30px_rgba(253,209,0,0.16)]' : 'border-gray-200 bg-white hover:border-yellow-200'
+                              }`}
+                            >
+                              <div className="flex items-start gap-3">
+                                <div className={`w-11 h-11 rounded-2xl flex items-center justify-center ${item.bg} ${item.color}`}>
+                                  <Icon size={18} />
+                                </div>
+                                <div className="flex-1">
+                                  <div className="flex items-center justify-between gap-3">
+                                    <p className="text-sm font-semibold text-gray-900">{item.label}</p>
+                                    {active && <span className="text-[10px] font-bold tracking-widest uppercase text-gray-900">Selected</span>}
+                                  </div>
+                                  <p className="text-xs text-gray-500 mt-1">Connected into the agent workflow</p>
+                                </div>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                      <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
+                        <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Connected ecosystem</p>
+                        <p className="text-sm text-gray-700">{selectedIntegrationLabels.join(' + ')}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {currentStep === 2 && (
                   <div className="space-y-5">
                     <div>
                       <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Primary focus · pilih 2</p>
@@ -489,7 +532,7 @@ const HowItWorksSection: React.FC = () => {
                   </div>
                 )}
 
-                {currentStep === 2 && (
+                {currentStep === 3 && (
                   <div className="space-y-4">
                     <p className="text-xs font-bold uppercase tracking-widest text-gray-400">WhatsApp roles · pilih sampai 2</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -528,52 +571,15 @@ const HowItWorksSection: React.FC = () => {
                   </div>
                 )}
 
-                {currentStep === 3 && (
-                  <div className="rounded-3xl border border-gray-100 bg-white p-5 md:p-6 shadow-sm">
-                    <div className="space-y-4">
-                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Connected tools · pilih sampai 4</p>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {ecosystemOptions.map((item) => {
-                          const Icon = item.icon;
-                          const active = selectedIntegrations.includes(item.id);
-                          return (
-                            <button
-                              key={item.id}
-                              type="button"
-                              onClick={() => toggleLimitedSelection(selectedIntegrations, item.id, setSelectedIntegrations, 4)}
-                              className={`rounded-2xl border p-4 text-left transition-all duration-200 ${
-                                active ? 'border-yellow-300 bg-yellow-50 shadow-[0_12px_30px_rgba(253,209,0,0.16)]' : 'border-gray-200 bg-white hover:border-yellow-200'
-                              }`}
-                            >
-                              <div className="flex items-start gap-3">
-                                <div className={`w-11 h-11 rounded-2xl flex items-center justify-center ${item.bg} ${item.color}`}>
-                                  <Icon size={18} />
-                                </div>
-                                <div className="flex-1">
-                                  <div className="flex items-center justify-between gap-3">
-                                    <p className="text-sm font-semibold text-gray-900">{item.label}</p>
-                                    {active && <span className="text-[10px] font-bold tracking-widest uppercase text-gray-900">Selected</span>}
-                                  </div>
-                                  <p className="text-xs text-gray-500 mt-1">Connected into the agent workflow</p>
-                                </div>
-                              </div>
-                            </button>
-                          );
-                        })}
-                      </div>
-                      <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
-                        <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Connected ecosystem</p>
-                        <p className="text-sm text-gray-700">{selectedIntegrationLabels.join(' + ')}</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
                 {currentStep === 4 && (
                   <div className="space-y-5">
                     <div className="rounded-3xl border border-yellow-200 p-5 shadow-[0_20px_45px_rgba(253,209,0,0.12)]" style={{ background: 'linear-gradient(135deg, rgba(253,209,0,0.16) 0%, rgba(255,255,255,0.82) 100%)' }}>
                       <p className="text-[11px] font-bold tracking-[0.18em] uppercase text-gray-500 mb-3">Your EliteVA setup</p>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="rounded-2xl bg-white/80 border border-white p-4">
+                          <p className="text-sm font-semibold text-gray-900 mb-1">Connected tools</p>
+                          <p className="text-sm text-gray-700">{selectedIntegrationLabels.join(' + ')}</p>
+                        </div>
                         <div className="rounded-2xl bg-white/80 border border-white p-4">
                           <p className="text-sm font-semibold text-gray-900 mb-1">Primary focus</p>
                           <p className="text-sm text-gray-700">{selectedPrimaryLabels.join(' + ')}</p>
@@ -585,10 +591,6 @@ const HowItWorksSection: React.FC = () => {
                         <div className="rounded-2xl bg-white/80 border border-white p-4">
                           <p className="text-sm font-semibold text-gray-900 mb-1">WhatsApp role</p>
                           <p className="text-sm text-gray-700">{selectedChannelLabels.join(' + ')}</p>
-                        </div>
-                        <div className="rounded-2xl bg-white/80 border border-white p-4">
-                          <p className="text-sm font-semibold text-gray-900 mb-1">Connected tools</p>
-                          <p className="text-sm text-gray-700">{selectedIntegrationLabels.join(' + ')}</p>
                         </div>
                       </div>
                     </div>
