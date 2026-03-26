@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import {
   Code2, Bot, Mail, Calendar, Cloud, Table, Map, Terminal,
   Database, Bell, MessageSquare, Users, DollarSign, LayoutDashboard,
-  Headphones, ShoppingCart, Globe, Check, Play, Zap, ArrowRight
+  Headphones, ShoppingCart, Globe, Check, Play, Zap, ArrowRight,
+  UserPlus, Target, MessageCircle, PlugZap, Rocket
 } from 'lucide-react';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -216,6 +217,162 @@ const HeroSection: React.FC = () => (
   </section>
 );
 
+const HowItWorksSection: React.FC = () => (
+  <section id="how-it-works" className="pb-12 md:pb-20 bg-white">
+    <div className="max-w-6xl mx-auto px-4 md:px-6">
+      <div
+        className="relative overflow-hidden rounded-[2rem] border border-yellow-100 bg-gradient-to-br from-white via-yellow-50/60 to-white shadow-[0_25px_80px_rgba(253,209,0,0.12)]"
+      >
+        <div className="absolute -top-16 -left-12 w-40 h-40 rounded-full blur-3xl" style={{ background: 'rgba(253,209,0,0.18)' }} />
+        <div className="absolute top-24 right-0 w-56 h-56 rounded-full blur-3xl" style={{ background: 'rgba(253,209,0,0.12)' }} />
+        <div className="absolute -bottom-10 left-1/3 w-56 h-56 rounded-full blur-3xl" style={{ background: 'rgba(253,209,0,0.10)' }} />
+
+        <div className="relative z-10 p-6 md:p-10 lg:p-12">
+          <div className="text-center mb-8 md:mb-12">
+            <p className="text-xs font-bold tracking-[0.22em] uppercase mb-3" style={{ color: '#fdd100' }}>
+              How It Works
+            </p>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 mb-3">
+              From setup to real business scale-up
+            </h2>
+            <p className="text-sm md:text-base text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              EliteVA bukan cuma chatbot. Kami bantu user membangun AI agent, menentukan fokus layanan utamanya,
+              menyambungkan ke WhatsApp dan tools kerja, lalu menjalankan alur operasional yang benar-benar meringankan pekerjaan.
+            </p>
+          </div>
+
+          <div className="relative">
+            <div className="hidden lg:block absolute left-[12%] right-[12%] top-[4.5rem] h-[2px] bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200" />
+            <div className="hidden md:block lg:hidden absolute left-8 top-12 bottom-12 w-[2px] bg-gradient-to-b from-yellow-200 via-yellow-400 to-yellow-200" />
+
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 lg:gap-4">
+              <div className="relative">
+                <div className="h-full rounded-3xl bg-white/90 border border-yellow-100 p-5 shadow-lg">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs font-bold tracking-wider text-gray-400">STEP 01</span>
+                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-sm" style={{ background: 'rgba(253,209,0,0.18)' }}>
+                      <UserPlus size={20} className="text-gray-900" />
+                    </div>
+                  </div>
+                  <h3 className="text-base md:text-lg font-bold text-gray-900 mb-2">User create their AI agent</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Mulai dengan agent pribadi yang disesuaikan untuk cara kerja bisnis user.
+                  </p>
+                </div>
+                <div className="hidden lg:flex absolute -right-3 top-[4.15rem] z-20 w-6 h-6 rounded-full items-center justify-center bg-white border border-yellow-200 shadow-sm">
+                  <ArrowRight size={14} className="text-gray-700" />
+                </div>
+              </div>
+
+              <div className="relative">
+                <div className="h-full rounded-3xl bg-white/90 border border-yellow-100 p-5 shadow-lg">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs font-bold tracking-wider text-gray-400">STEP 02</span>
+                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-sm" style={{ background: 'rgba(253,209,0,0.18)' }}>
+                      <Target size={20} className="text-gray-900" />
+                    </div>
+                  </div>
+                  <h3 className="text-base md:text-lg font-bold text-gray-900 mb-3">Choose core & support services</h3>
+                  <div className="mb-3">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">Primary focus</p>
+                    <div className="flex flex-wrap gap-2">
+                      {primaryFocuses.map((item) => (
+                        <span key={item} className="px-3 py-1.5 rounded-full text-xs font-semibold text-gray-900 border border-yellow-200" style={{ background: 'rgba(253,209,0,0.22)' }}>
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-2">Support focus</p>
+                    <div className="flex flex-wrap gap-2">
+                      {supportFocuses.map((item) => (
+                        <span key={item} className="px-3 py-1.5 rounded-full text-xs font-medium text-gray-700 bg-gray-50 border border-gray-200">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="hidden lg:flex absolute -right-3 top-[4.15rem] z-20 w-6 h-6 rounded-full items-center justify-center bg-white border border-yellow-200 shadow-sm">
+                  <ArrowRight size={14} className="text-gray-700" />
+                </div>
+              </div>
+
+              <div className="relative">
+                <div className="h-full rounded-3xl bg-gray-900 text-white p-5 shadow-xl">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs font-bold tracking-wider text-gray-400">STEP 03</span>
+                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center bg-white/10 border border-white/10">
+                      <MessageCircle size={20} style={{ color: '#fdd100' }} />
+                    </div>
+                  </div>
+                  <h3 className="text-base md:text-lg font-bold mb-2">Inject agent into WhatsApp</h3>
+                  <p className="text-sm text-gray-300 leading-relaxed mb-4">
+                    Agent langsung hadir di channel yang paling sering dipakai customer dan tim.
+                  </p>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                    <p className="text-xs text-gray-400 mb-1">Live channel</p>
+                    <p className="text-sm font-semibold text-white">WhatsApp conversations, follow-ups, reminders, inbound support</p>
+                  </div>
+                </div>
+                <div className="hidden lg:flex absolute -right-3 top-[4.15rem] z-20 w-6 h-6 rounded-full items-center justify-center bg-white border border-yellow-200 shadow-sm">
+                  <ArrowRight size={14} className="text-gray-700" />
+                </div>
+              </div>
+
+              <div className="relative">
+                <div className="h-full rounded-3xl bg-white/90 border border-yellow-100 p-5 shadow-lg">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs font-bold tracking-wider text-gray-400">STEP 04</span>
+                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-sm" style={{ background: 'rgba(253,209,0,0.18)' }}>
+                      <PlugZap size={20} className="text-gray-900" />
+                    </div>
+                  </div>
+                  <h3 className="text-base md:text-lg font-bold text-gray-900 mb-3">Connect with your work ecosystem</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {ecosystemItems.map((item) => (
+                      <span key={item} className="px-3 py-1.5 rounded-full text-xs font-medium text-gray-700 bg-white border border-gray-200 shadow-sm">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="hidden lg:flex absolute -right-3 top-[4.15rem] z-20 w-6 h-6 rounded-full items-center justify-center bg-white border border-yellow-200 shadow-sm">
+                  <ArrowRight size={14} className="text-gray-700" />
+                </div>
+              </div>
+
+              <div className="relative">
+                <div className="h-full rounded-3xl border border-yellow-200 p-5 shadow-[0_20px_50px_rgba(253,209,0,0.16)]" style={{ background: 'linear-gradient(135deg, rgba(253,209,0,0.96) 0%, rgba(255,239,163,0.95) 100%)' }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs font-bold tracking-wider text-gray-700">STEP 05</span>
+                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center bg-white/60 border border-white/60">
+                      <Rocket size={20} className="text-gray-900" />
+                    </div>
+                  </div>
+                  <h3 className="text-base md:text-lg font-bold text-gray-900 mb-2">Scale up work with Elite Virtual Assistant</h3>
+                  <p className="text-sm text-gray-800 leading-relaxed mb-4">
+                    Hasil akhirnya: user punya AI virtual assistant yang aktif, terhubung, dan benar-benar membantu tim bergerak lebih cepat.
+                  </p>
+                  <div className="space-y-2">
+                    {['Faster response time', 'Less manual work', 'Better follow-up consistency', 'Higher operational capacity'].map((item) => (
+                      <div key={item} className="flex items-center gap-2 text-sm font-medium text-gray-900">
+                        <Check size={15} />
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 const StatsBar: React.FC = () => (
   <section className="bg-white border-y border-gray-100">
     <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-6">
@@ -278,6 +435,10 @@ const WorksWithSection: React.FC = () => (
   </section>
 );
 
+
+const primaryFocuses = ['Customer Service', 'WhatsApp Automation'];
+const supportFocuses = ['Email Follow-up', 'Dashboard & Reporting'];
+const ecosystemItems = ['APIs', 'Google Drive', 'Gmail', 'Calendar', 'Sheets', 'Maps', 'CRM', 'Webhooks'];
 const ServicesSection: React.FC = () => (
   <section id="services" className="py-12 md:py-20 bg-white">
     <div className="max-w-6xl mx-auto px-4 md:px-6">
@@ -356,6 +517,7 @@ const EliteVALanding: React.FC = () => {
         <StatsBar />
         <WorksWithSection />
         <ServicesSection />
+        <HowItWorksSection />
         <CTABanner />
       </main>
       <EVFooter />
