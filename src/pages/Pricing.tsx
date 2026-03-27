@@ -204,19 +204,19 @@ const PricingCards: React.FC = () => (
 
             {/* CTA button */}
             {plan.ctaStyle === 'border' && (
-              <button className="w-full py-3 rounded-2xl border border-gray-200 text-gray-700 font-semibold text-sm hover:border-yellow-400 hover:text-gray-900 transition-colors">
+              <Link to="/signup" className="block w-full py-3 rounded-2xl border border-gray-200 text-gray-700 font-semibold text-sm hover:border-yellow-400 hover:text-gray-900 transition-colors text-center">
                 {plan.cta}
-              </button>
+              </Link>
             )}
             {plan.ctaStyle === 'dark' && (
-              <button className="w-full py-3 rounded-2xl bg-gray-900 text-white font-bold text-sm hover:bg-gray-800 transition-colors">
+            <Link to="/signup" className="block w-full py-3 rounded-2xl bg-gray-900 text-white font-bold text-sm hover:bg-gray-800 transition-colors text-center">
                 {plan.cta}
-              </button>
+              </Link>
             )}
             {plan.ctaStyle === 'dark-filled' && (
-              <button className="w-full py-3 rounded-2xl bg-gray-900 text-white font-bold text-sm hover:bg-gray-800 transition-colors">
+              <Link to="/signup" className="block w-full py-3 rounded-2xl bg-gray-900 text-white font-bold text-sm hover:bg-gray-800 transition-colors text-center">
                 {plan.cta}
-              </button>
+              </Link>
             )}
           </div>
         ))}

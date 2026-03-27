@@ -179,7 +179,7 @@ const HeroSection: React.FC = () => (
 
           <div className="flex flex-wrap justify-center lg:justify-start gap-3">
             <Link
-              to="/pricing"
+              to="/signup"
               className="px-6 py-3 rounded-full text-gray-900 font-bold hover:opacity-90 transition-opacity text-sm md:text-base"
               style={{ background: '#fdd100' }}
             >
