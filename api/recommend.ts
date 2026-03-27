@@ -56,14 +56,14 @@ Work Challenges / Business Pains:
 ${businessPains}`;
 
   try {
-    const response = await fetch('https://api.minimax.chat/v1/text/chatcompletion_v2', {
+    const response = await fetch('https://api.minimax.io/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${MINIMAX_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'MiniMax-Text-01',
+        model: 'MiniMax-M2.7',
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: userMessage },
@@ -80,13 +80,19 @@ ${businessPains}`;
     }
 
     const data = await response.json();
+    // OpenAI-compatible format: choices[0].message.content
     const raw = data?.choices?.[0]?.message?.content ?? '';
+
+    if (!raw) {
+      console.error('Unexpected MiniMax response:', JSON.stringify(data).slice(0, 500));
+      return res.status(502).json({ error: 'Invalid AI response format', debug: JSON.stringify(data).slice(0, 500) });
+    }
 
     // Extract JSON from response (strip any markdown code fences)
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      console.error('No JSON found in response:', raw);
-      return res.status(502).json({ error: 'Invalid AI response format' });
+      console.error('No JSON found in response:', raw.slice(0, 300));
+      return res.status(502).json({ error: 'Invalid AI response format', raw: raw.slice(0, 300) });
     }
 
     const recommendation = JSON.parse(jsonMatch[0]);
