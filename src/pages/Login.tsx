@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, AtSign, Zap, Sparkles, Check, ArrowRight, Loader2, Bot } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -97,12 +97,13 @@ const SignupForm: React.FC<{ onSuccess: (name: string) => void }> = ({ onSuccess
   const [showRec, setShowRec] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [selectedPains, setSelectedPains] = useState<string[]>([]);
   const recRef = useRef<HTMLDivElement>(null);
 
-  const canGenerate =
+  const canSubmit =
     form.name.trim() !== '' && form.email.trim() !== '' &&
     form.businessType !== '' && form.planInterest !== '' &&
-    form.businessPains.trim().length > 15;
+    form.businessPains.trim().length > 5;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -112,10 +113,20 @@ const SignupForm: React.FC<{ onSuccess: (name: string) => void }> = ({ onSuccess
   };
 
   const appendPain = (pain: string) => {
-    setForm((prev) => ({
-      ...prev,
-      businessPains: prev.businessPains ? `${prev.businessPains.trimEnd()}\n${pain}` : pain,
-    }));
+    const alreadySelected = selectedPains.includes(pain);
+    if (alreadySelected) {
+      setSelectedPains((prev) => prev.filter((p) => p !== pain));
+      setForm((prev) => ({
+        ...prev,
+        businessPains: prev.businessPains.split('\n').filter((l) => l.trim() !== pain.trim()).join('\n').trim(),
+      }));
+    } else {
+      setSelectedPains((prev) => [...prev, pain]);
+      setForm((prev) => ({
+        ...prev,
+        businessPains: prev.businessPains ? `${prev.businessPains.trimEnd()}\n${pain}` : pain,
+      }));
+    }
     setShowRec(false); setRecommendation(null);
   };
 
@@ -141,14 +152,16 @@ const SignupForm: React.FC<{ onSuccess: (name: string) => void }> = ({ onSuccess
     }
   }, [showRec]);
 
-  const handleSubmit = async () => {
-    if (!canGenerate || !recommendation) return;
+  const handleSubmit = async (withRec = true) => {
+    if (!canSubmit) return;
     setIsSubmitting(true); setSubmitError('');
     const { error } = await supabase.from('eliteva_signups').insert({
       name: form.name.trim(), business_name: form.businessName.trim() || null,
       email: form.email.trim(), phone: form.phone.trim() || null,
       business_type: form.businessType, plan_interest: form.planInterest,
-      business_pains: form.businessPains.trim(), ai_recommendation: recommendation, status: 'new',
+      business_pains: form.businessPains.trim(),
+      ai_recommendation: withRec ? recommendation : null,
+      status: 'new',
     });
     setIsSubmitting(false);
     if (error) { setSubmitError('Something went wrong. Please try again.'); }
@@ -211,29 +224,43 @@ const SignupForm: React.FC<{ onSuccess: (name: string) => void }> = ({ onSuccess
           Describe recurring friction, missed steps, or manual bottlenecks in your workflow.
         </p>
         <div className="flex flex-wrap gap-1.5 mb-2">
-          {PAIN_EXAMPLES.map((p) => (
-            <button key={p} type="button" onClick={() => appendPain(p)}
-              className="text-[11px] px-2.5 py-1 rounded-full border border-slate-600 text-slate-400 hover:border-yellow-400/60 hover:text-yellow-300 transition-all">
-              + {p.length > 44 ? p.slice(0, 44) + '…' : p}
-            </button>
-          ))}
+          {PAIN_EXAMPLES.map((p) => {
+            const sel = selectedPains.includes(p);
+            return (
+              <button key={p} type="button" onClick={() => appendPain(p)}
+                className={`text-[11px] px-2.5 py-1 rounded-full border transition-all ${
+                  sel
+                    ? 'border-yellow-400/80 bg-yellow-400/20 text-yellow-300 font-semibold'
+                    : 'border-slate-600 text-slate-400 hover:border-yellow-400/60 hover:text-yellow-300'
+                }`}>
+                {sel ? '✓' : '+'} {p.length > 44 ? p.slice(0, 44) + '…' : p}
+              </button>
+            );
+          })}
         </div>
         <textarea name="businessPains" value={form.businessPains} onChange={handleChange} rows={4}
           placeholder="e.g. Follow-up sering terlewat, terlalu banyak pesan masuk WhatsApp, data tidak terorganisir..."
           className={`${inputCls} resize-none leading-relaxed`} />
       </div>
 
-      {/* Generate button */}
-      {canGenerate && !isThinking && !showRec && (
-        <button onClick={handleGenerate}
-          className="w-full flex items-center justify-center gap-2 py-3 rounded-lg text-gray-900 font-bold text-sm hover:opacity-90 transition-opacity"
-          style={{ background: '#fdd100' }}>
-          <Sparkles size={16} /> Generate My AI Agent Setup
-        </button>
+      {/* Buttons */}
+      {canSubmit && !isThinking && !showRec && (
+        <div className="space-y-2">
+          <button onClick={handleGenerate}
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-lg text-gray-900 font-bold text-sm hover:opacity-90 transition-opacity"
+            style={{ background: '#fdd100' }}>
+            <Sparkles size={16} /> Generate My AI Setup
+          </button>
+          <button onClick={() => handleSubmit(false)} disabled={isSubmitting}
+            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-slate-600 text-slate-300 text-sm font-semibold hover:border-yellow-400/60 transition-colors disabled:opacity-50">
+            {isSubmitting ? <><Loader2 size={13} className="animate-spin" /> Saving...</> : <>Submit Directly <ArrowRight size={13} /></>}
+          </button>
+          {submitError && <p className="text-xs text-red-400 text-center">{submitError}</p>}
+        </div>
       )}
 
       {/* Re-generate */}
-      {canGenerate && !isThinking && showRec && (
+      {canSubmit && !isThinking && showRec && (
         <button onClick={handleGenerate} className="text-xs text-slate-500 hover:text-slate-300 underline transition-colors w-full text-center">
           Regenerate recommendation
         </button>
@@ -366,8 +393,17 @@ const SignupForm: React.FC<{ onSuccess: (name: string) => void }> = ({ onSuccess
 // ─── Login page ───────────────────────────────────────────────────────────────
 
 const Login: React.FC<LoginPageProps> = ({ onLogin }) => {
+  const navigate = useNavigate();
   const [tab, setTab] = useState<'login' | 'signup'>('login');
   const [signupDone, setSignupDone] = useState('');
+  const [countdown, setCountdown] = useState(5);
+
+  useEffect(() => {
+    if (!signupDone) return;
+    const interval = setInterval(() => setCountdown((c) => c - 1), 1000);
+    const timeout = setTimeout(() => navigate('/elite-va'), 5000);
+    return () => { clearInterval(interval); clearTimeout(timeout); };
+  }, [signupDone, navigate]);
 
   return (
     <div className="min-h-screen bg-slate-900 text-white flex items-center justify-center p-4">
@@ -430,19 +466,23 @@ const Login: React.FC<LoginPageProps> = ({ onLogin }) => {
             {/* Sign Up success */}
             {tab === 'signup' && signupDone && (
               <div className="text-center py-8">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-[0_8px_30px_rgba(253,209,0,0.4)]"
                   style={{ background: '#fdd100' }}>
                   <Check size={28} className="text-gray-900" />
                 </div>
                 <h3 className="text-lg font-extrabold text-white mb-2">You're in, {signupDone}!</h3>
-                <p className="text-slate-400 text-sm mb-6 leading-relaxed">
-                  Your setup profile is saved. We'll reach out within 24 hours to configure your AI agent.
+                <p className="text-slate-400 text-sm mb-2 leading-relaxed">
+                  Your profile has been saved. We'll be in touch within <strong className="text-white">24 hours</strong> to set up your AI agent.
                 </p>
-                <Link to="/elite-va"
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-gray-900 font-bold text-sm hover:opacity-90 transition-opacity"
-                  style={{ background: '#fdd100' }}>
-                  Back to Home
-                </Link>
+                <p className="text-slate-500 text-xs mb-6">A confirmation email will be sent to your inbox.</p>
+                <div className="space-y-3">
+                  <p className="text-slate-500 text-xs">Redirecting to home in {countdown}s...</p>
+                  <button onClick={() => navigate('/elite-va')}
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-gray-900 font-bold text-sm hover:opacity-90 transition-opacity"
+                    style={{ background: '#fdd100' }}>
+                    Go to Home Now
+                  </button>
+                </div>
               </div>
             )}
           </div>
