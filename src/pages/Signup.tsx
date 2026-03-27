@@ -298,7 +298,7 @@ const Signup: React.FC = () => {
     setRecommendation(null);
   };
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     if (!canGenerate || isThinking) return;
     setIsThinking(true);
     setThinkingStep(0);
@@ -308,19 +308,33 @@ const Signup: React.FC = () => {
     const t1 = setTimeout(() => setThinkingStep(1), 800);
     const t2 = setTimeout(() => setThinkingStep(2), 1700);
     const t3 = setTimeout(() => setThinkingStep(3), 2600);
-    const t4 = setTimeout(() => {
-      const rec = buildRecommendation({
-        businessType: form.businessType,
-        businessName: form.businessName,
-        planInterest: form.planInterest,
-        businessPains: form.businessPains,
-      });
-      setRecommendation(rec);
-      setIsThinking(false);
-      setShowRec(true);
-    }, 3400);
 
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+    try {
+      const res = await fetch('/api/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          businessType: form.businessType,
+          businessName: form.businessName,
+          planInterest: form.planInterest,
+          businessPains: form.businessPains,
+        }),
+      });
+      const rec = res.ok ? await res.json() : buildRecommendation({
+        businessType: form.businessType, businessName: form.businessName,
+        planInterest: form.planInterest, businessPains: form.businessPains,
+      });
+      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
+      setThinkingStep(3);
+      setTimeout(() => { setRecommendation(rec); setIsThinking(false); setShowRec(true); }, 400);
+    } catch {
+      const rec = buildRecommendation({
+        businessType: form.businessType, businessName: form.businessName,
+        planInterest: form.planInterest, businessPains: form.businessPains,
+      });
+      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
+      setRecommendation(rec); setIsThinking(false); setShowRec(true);
+    }
   };
 
   useEffect(() => {

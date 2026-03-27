@@ -130,20 +130,36 @@ const SignupForm: React.FC<{ onSuccess: (name: string) => void }> = ({ onSuccess
     setShowRec(false); setRecommendation(null);
   };
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     if (!canSubmit || isThinking) return;
     setIsThinking(true); setThinkingStep(0); setShowRec(false); setRecommendation(null);
     const t1 = setTimeout(() => setThinkingStep(1), 800);
     const t2 = setTimeout(() => setThinkingStep(2), 1700);
     const t3 = setTimeout(() => setThinkingStep(3), 2600);
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          businessType: form.businessType, businessName: form.businessName,
+          planInterest: form.planInterest, businessPains: form.businessPains,
+        }),
+      });
+      const rec = res.ok ? await res.json() : buildRecommendation({
+        businessType: form.businessType, businessName: form.businessName,
+        planInterest: form.planInterest, businessPains: form.businessPains,
+      });
+      clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
+      setThinkingStep(3);
+      setTimeout(() => { setRecommendation(rec); setIsThinking(false); setShowRec(true); }, 400);
+    } catch {
       const rec = buildRecommendation({
         businessType: form.businessType, businessName: form.businessName,
         planInterest: form.planInterest, businessPains: form.businessPains,
       });
-      setRecommendation(rec); setIsThinking(false); setShowRec(true);
       clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
-    }, 3400);
+      setRecommendation(rec); setIsThinking(false); setShowRec(true);
+    }
   };
 
   useEffect(() => {
