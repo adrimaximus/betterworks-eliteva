@@ -22,6 +22,7 @@ import CategoryManagement from "./pages/CategoryManagement";
 import ServiceManagement from "./pages/ServiceManagement";
 import EliteVALanding from "./pages/EliteVALanding";
 import Pricing from "./pages/Pricing";
+import About from "./pages/About";
 
 // Create the query client outside of the component
 const queryClient = new QueryClient();
@@ -74,6 +75,7 @@ const App = () => {
           <Route path="/admin/categories" element={<CategoryManagement />} />
           <Route path="/elite-va" element={<EliteVALanding />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/about" element={<About />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
