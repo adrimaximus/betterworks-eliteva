@@ -25,7 +25,6 @@ import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 import Signup from "./pages/Signup";
 import LoginPage from "./pages/Login";
-import InspectorToggle from "./components/devtools/InspectorToggle";
 import FloatingAvatar from "./components/AIAvatar/FloatingAvatar";
 
 // Create the query client outside of the component
@@ -89,7 +88,6 @@ const App = () => {
         <Sonner />
       </BrowserRouter>
         <FloatingAvatar />
-        {import.meta.env.DEV && <InspectorToggle />}
     </LanguageProvider>
     </QueryClientProvider>
   );
