@@ -134,6 +134,9 @@ importers:
       jspdf:
         specifier: ^2.5.1
         version: 2.5.2
+      lottie-emojis:
+        specifier: ^1.0.0
+        version: 1.0.0
       lottie-react:
         specifier: ^2.4.1
         version: 2.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2602,6 +2605,9 @@ packages:
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
+
+  lottie-emojis@1.0.0:
+    resolution: {integrity: sha512-4s2kZWxZUX94jOBrHHzjtkKYikkuseo3oMLkdLP5ubVI8PyTisntIaUFhZfMmogko0NJ8decf33d1B2Pea6oYA==}
 
   lottie-react@2.4.1:
     resolution: {integrity: sha512-LQrH7jlkigIIv++wIyrOYFLHSKQpEY4zehPicL9bQsrt1rnoKRYCYgpCUe5maqylNtacy58/sQDZTkwMcTRxZw==}
@@ -5496,6 +5502,8 @@ snapshots:
   loose-envify@1.4.0:
     dependencies:
       js-tokens: 4.0.0
+
+  lottie-emojis@1.0.0: {}
 
   lottie-react@2.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
