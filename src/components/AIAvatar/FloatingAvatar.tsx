@@ -200,7 +200,7 @@ export const FloatingAvatar: React.FC<FloatingAvatarProps> = ({
       <div
         className={`
           absolute bottom-0 right-0
-          w-[250px] h-96
+          w-[380px] h-[520px]
           rounded-2xl
           overflow-hidden
           flex flex-col
