@@ -199,8 +199,8 @@ export const FloatingAvatar: React.FC<FloatingAvatarProps> = ({
       {/* ========== Expanded chat panel ========== */}
       <div
         className={`
-          absolute bottom-0 right-0
-          w-[380px] h-[520px]
+          absolute bottom-full right-0 mb-3
+          w-[380px] h-[500px]
           rounded-2xl
           overflow-hidden
           flex flex-col
