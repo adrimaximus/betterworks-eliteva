@@ -199,7 +199,7 @@ export const FloatingAvatar: React.FC<FloatingAvatarProps> = ({
       {/* ========== Expanded chat panel ========== */}
       <div
         className={`
-          absolute bottom-full right-0 mb-3
+          fixed bottom-24 right-6
           w-[380px] h-[500px]
           rounded-2xl
           overflow-hidden
@@ -259,7 +259,7 @@ export const FloatingAvatar: React.FC<FloatingAvatarProps> = ({
                   >
                     <AIAvatarStatic expression={currentExpression} size={32} />
                   </div>
-                  <div className="flex-1 max-w-[80%]">
+                  <div className="flex-1">
                     <ExpressionBubble
                       message={msg.content}
                       avatarSize={0}
@@ -275,7 +275,7 @@ export const FloatingAvatar: React.FC<FloatingAvatarProps> = ({
             return (
               <div key={idx} className="flex justify-end">
                 <div
-                  className="max-w-[80%] rounded-2xl rounded-br-sm px-3.5 py-2"
+                  className="rounded-2xl rounded-br-sm px-3.5 py-2"
                   style={{
                     background: 'linear-gradient(135deg, #fdd100 0%, #f5c800 100%)',
                   }}
