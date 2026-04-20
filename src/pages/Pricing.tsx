@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Zap, ArrowLeft, Code2, Bot, Mail, Calendar, Cloud, Table, Map, Terminal } from 'lucide-react';
+import { Check, Zap, ArrowLeft, Code2, Bot, Mail, Calendar, Cloud, Table, Map, Terminal, MapPin, Phone } from 'lucide-react';
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -49,7 +49,7 @@ const plans = [
       '24/7 customer service bot',
       'Web scraping tools',
       'Custom integrations',
-      'Dedicated account manager',
+      'Priority support',
       '3 user seats',
     ],
     cta: 'Contact Sales',
@@ -286,16 +286,37 @@ const IntegrationsVisual: React.FC = () => (
 
 const PricingFooter: React.FC = () => (
   <footer className="bg-gray-50 border-t border-gray-100 py-6">
-    <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <Link to="/elite-va" className="flex items-center gap-2">
-        <div
-          className="w-7 h-7 rounded-full flex items-center justify-center"
-          style={{ background: '#fdd100' }}
-        >
-          <Zap size={13} className="text-gray-900" />
+    <div className="max-w-6xl mx-auto px-6 flex flex-col gap-4">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <Link to="/elite-va" className="flex items-center gap-2">
+          <div
+            className="w-7 h-7 rounded-full flex items-center justify-center"
+            style={{ background: '#fdd100' }}
+          >
+            <Zap size={13} className="text-gray-900" />
+          </div>
+          <span className="font-bold text-gray-900">EliteVA</span>
+        </Link>
+      </div>
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-sm text-gray-500 border-t border-gray-200 pt-4">
+        <div className="flex flex-col gap-1">
+          <span className="font-semibold text-gray-700">PT Saki Aksata Maxima | Betterworks ID</span>
+          <span className="flex items-center gap-1.5">
+            <MapPin size={14} className="text-gray-400 shrink-0" />
+            Jl. Siliwangi Q No.1, Depok, Kec. Pancoran Mas, Kota Depok, Jawa Barat 16431
+          </span>
         </div>
-        <span className="font-bold text-gray-900">EliteVA</span>
-      </Link>
+        <div className="flex items-center gap-4">
+          <a href="mailto:hello@betterworks.id" className="flex items-center gap-1.5 hover:text-gray-700 transition-colors">
+            <Mail size={14} className="text-gray-400 shrink-0" />
+            hello@betterworks.id
+          </a>
+          <a href="https://wa.me/6285817426700" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-gray-700 transition-colors">
+            <Phone size={14} className="text-gray-400 shrink-0" />
+            +62 858-1742-6700
+          </a>
+        </div>
+      </div>
     </div>
   </footer>
 );
