@@ -156,7 +156,7 @@ export const FloatingAvatar: React.FC<FloatingAvatarProps> = ({
       style={{ fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif" }}
     >
       {/* ========== Collapsed avatar bubble ========== */}
-      <button
+      {import.meta.env.DEV && <button
         onClick={toggleOpen}
         aria-label={isOpen ? 'Close AI Assistant' : 'Open AI Assistant'}
         className={`
@@ -194,7 +194,7 @@ export const FloatingAvatar: React.FC<FloatingAvatarProps> = ({
           className="absolute -top-1 -left-1 w-4 h-4 text-gray-800 bg-[#fdd100] rounded-full p-0.5"
           strokeWidth={2.5}
         />
-      </button>
+      </button>}
 
       {/* ========== Expanded chat panel ========== */}
       <div

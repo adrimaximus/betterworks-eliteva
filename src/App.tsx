@@ -90,7 +90,7 @@ const App = () => {
         <Toaster />
         <Sonner />
       </BrowserRouter>
-        <FloatingAvatar />
+        {import.meta.env.DEV && <FloatingAvatar />}
         {import.meta.env.DEV && <InspectorToggle />}
     </LanguageProvider>
     </QueryClientProvider>
