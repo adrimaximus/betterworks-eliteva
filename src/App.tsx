@@ -22,10 +22,12 @@ import CategoryManagement from "./pages/CategoryManagement";
 import ServiceManagement from "./pages/ServiceManagement";
 import EliteVALanding from "./pages/EliteVALanding";
 import Pricing from "./pages/Pricing";
+import Checkout from "./pages/Checkout";
 import About from "./pages/About";
 import Signup from "./pages/Signup";
 import LoginPage from "./pages/Login";
 import FloatingAvatar from "./components/AIAvatar/FloatingAvatar";
+import InspectorToggle from "./components/devtools/InspectorToggle";
 
 // Create the query client outside of the component
 const queryClient = new QueryClient();
@@ -79,6 +81,7 @@ const App = () => {
           <Route path="/admin/categories" element={<CategoryManagement />} />
           <Route path="/elite-va" element={<EliteVALanding />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/about" element={<About />} />
           <Route path="/signup" element={<Signup />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
@@ -88,6 +91,7 @@ const App = () => {
         <Sonner />
       </BrowserRouter>
         <FloatingAvatar />
+        {import.meta.env.DEV && <InspectorToggle />}
     </LanguageProvider>
     </QueryClientProvider>
   );

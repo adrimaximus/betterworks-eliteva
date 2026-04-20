@@ -114,6 +114,37 @@ const InspectorToggle = () => {
         return details;
     };
 
+    // Helper: search DOWN into child fibers for a component with _debugSource
+    const findChildWithSource = useCallback((fiber: any, maxDepth: number = 6): any => {
+        if (!fiber || maxDepth <= 0) return null;
+        const child = fiber.child || fiber.sibling;
+        if (!child) return null;
+
+        // Check current child
+        const name = getComponentName(child);
+        if (child._debugSource && name !== 'Unknown' && name !== 'div' && name !== 'span' && name !== 'Fragment') {
+            return child;
+        }
+        if (child._debugSource && name !== 'div' && name !== 'span') {
+            return child;
+        }
+
+        // Recurse into child's children
+        const found = findChildWithSource(child, maxDepth - 1);
+        if (found) return found;
+
+        // Check sibling
+        if (child.sibling) {
+            const sibName = getComponentName(child.sibling);
+            if (child.sibling._debugSource && sibName !== 'Unknown' && sibName !== 'div' && sibName !== 'span') {
+                return child.sibling;
+            }
+            return findChildWithSource(child.sibling, maxDepth - 1);
+        }
+
+        return null;
+    }, [getComponentName]);
+
     const getInspectorItem = useCallback((element: HTMLElement): InspectorItem | null => {
         const key = Object.keys(element).find(k => k.startsWith('__reactFiber$'));
         let fiber = key ? (element as any)[key] : null;
@@ -127,9 +158,10 @@ const InspectorToggle = () => {
         let attempts = 0;
         let bestFiber = null;
 
-        while (currentFiber && attempts < 8) {
+        // Phase 1: Search UP the fiber tree for a component with _debugSource
+        while (currentFiber && attempts < 12) {
              const name = getComponentName(currentFiber);
-             if (currentFiber._debugSource && name !== 'Unknown' && name !== 'div' && name !== 'span') {
+             if (currentFiber._debugSource && name !== 'Unknown' && name !== 'div' && name !== 'span' && name !== 'Fragment') {
                  bestFiber = currentFiber;
                  break; 
              }
@@ -138,6 +170,24 @@ const InspectorToggle = () => {
              }
              currentFiber = currentFiber.return;
              attempts++;
+        }
+
+        // Phase 2: If best result is still a generic element, search DOWN into children
+        if (bestFiber) {
+            const bestName = getComponentName(bestFiber);
+            const isGeneric = !bestName || bestName === 'div' || bestName === 'span' || bestName === 'Unknown' || bestName === 'Fragment';
+            if (isGeneric) {
+                const childFiber = findChildWithSource(fiber);
+                if (childFiber) {
+                    bestFiber = childFiber;
+                }
+            }
+        } else if (fiber) {
+            // No source found going up, try going down
+            const childFiber = findChildWithSource(fiber);
+            if (childFiber) {
+                bestFiber = childFiber;
+            }
         }
 
         const classHint = getElementDetails(element);
@@ -166,7 +216,7 @@ const InspectorToggle = () => {
             rect: element.getBoundingClientRect(),
             info: { componentName, fileName, lineNumber, fullIdentifier }
         };
-    }, [getComponentName]);
+    }, [getComponentName, findChildWithSource]);
 
     // Copy Logic
     const copyToClipboard = async () => {

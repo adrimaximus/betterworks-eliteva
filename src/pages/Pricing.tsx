@@ -8,7 +8,7 @@ const plans = [
   {
     name: 'Starter',
     tagline: 'Perfect for small businesses just getting started',
-    price: '29',
+    price: '449K',
     highlighted: false,
     features: [
       '500 AI actions per month',
@@ -24,7 +24,7 @@ const plans = [
   {
     name: 'Professional',
     tagline: 'Best for growing businesses with advanced needs',
-    price: '79',
+    price: '1.2Mio',
     highlighted: true,
     badge: 'MOST POPULAR',
     features: [
@@ -41,7 +41,7 @@ const plans = [
   {
     name: 'Enterprise',
     tagline: 'Custom solutions for large organizations',
-    price: '199',
+    price: '3.1Mio',
     highlighted: false,
     features: [
       'Unlimited AI actions',
@@ -163,14 +163,14 @@ const PricingCards: React.FC = () => (
                   plan.highlighted ? 'text-gray-900' : 'text-gray-900'
                 }`}
               >
-                ${plan.price}
+                Rp {plan.price}
               </span>
               <span
                 className={`text-sm ml-1 ${
                   plan.highlighted ? 'text-gray-700' : 'text-gray-500'
                 }`}
               >
-                /month
+                /bulan
               </span>
             </div>
 
@@ -204,17 +204,17 @@ const PricingCards: React.FC = () => (
 
             {/* CTA button */}
             {plan.ctaStyle === 'border' && (
-              <Link to="/signup" className="block w-full py-3 rounded-2xl border border-gray-200 text-gray-700 font-semibold text-sm hover:border-yellow-400 hover:text-gray-900 transition-colors text-center">
+              <Link to={`/checkout?plan=${plan.name.toLowerCase()}`} className="block w-full py-3 rounded-2xl border border-gray-200 text-gray-700 font-semibold text-sm hover:border-yellow-400 hover:text-gray-900 transition-colors text-center">
                 {plan.cta}
               </Link>
             )}
             {plan.ctaStyle === 'dark' && (
-            <Link to="/signup" className="block w-full py-3 rounded-2xl bg-gray-900 text-white font-bold text-sm hover:bg-gray-800 transition-colors text-center">
+            <Link to={`/checkout?plan=${plan.name.toLowerCase()}`} className="block w-full py-3 rounded-2xl bg-gray-900 text-white font-bold text-sm hover:bg-gray-800 transition-colors text-center">
                 {plan.cta}
               </Link>
             )}
             {plan.ctaStyle === 'dark-filled' && (
-              <Link to="/signup" className="block w-full py-3 rounded-2xl bg-gray-900 text-white font-bold text-sm hover:bg-gray-800 transition-colors text-center">
+              <Link to={`/checkout?plan=${plan.name.toLowerCase()}`} className="block w-full py-3 rounded-2xl bg-gray-900 text-white font-bold text-sm hover:bg-gray-800 transition-colors text-center">
                 {plan.cta}
               </Link>
             )}

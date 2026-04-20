@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Lottie from 'lottie-react';
+import './emoji-animations.css';
+import React, { useState, useEffect } from 'react';
 import { Expression, LOOPING_EXPRESSIONS } from './types';
 import { avatarController } from './AvatarController';
-import { getLottieData } from './LottieMapper';
+import { getEmojiForExpression } from './emojiMapper';
 import { cn } from '@/lib/utils';
 
 // ---------------------------------------------------------------------------
@@ -23,7 +23,30 @@ interface AIAvatarStaticProps {
 }
 
 // ---------------------------------------------------------------------------
-// AIAvatar – controller-driven, subscribes to avatarController
+// Emoji Avatar Component
+// ---------------------------------------------------------------------------
+
+const EmojiAvatar: React.FC<{ expression: Expression; size: number }> = ({ expression, size }) => {
+  const emoji = getEmojiForExpression(expression);
+  const isLooping = LOOPING_EXPRESSIONS.includes(expression);
+  
+  return (
+    <div
+      className="w-full h-full rounded-full flex items-center justify-center select-none"
+      style={{
+        background: 'linear-gradient(135deg, #fdd100 0%, #f5c800 100%)',
+        animation: isLooping ? 'emojiBounce 2s ease-in-out infinite' : 'emojiPop 0.3s ease-out',
+        fontSize: size * 0.55,
+        lineHeight: 1,
+      }}
+    >
+      {emoji}
+    </div>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// AIAvatar – controller-driven
 // ---------------------------------------------------------------------------
 
 export const AIAvatar: React.FC<AIAvatarProps> = ({
@@ -33,35 +56,15 @@ export const AIAvatar: React.FC<AIAvatarProps> = ({
   onExpressionChange,
 }) => {
   const [currentExpression, setCurrentExpression] = useState<Expression>(defaultExpression);
-  const [animationData, setAnimationData] = useState<unknown>(null);
-  const isMounted = useRef(true);
 
-  // Load Lottie data whenever the expression changes
-  useEffect(() => {
-    const data = getLottieData(currentExpression);
-    if (isMounted.current) {
-      setAnimationData(data);
-    }
-  }, [currentExpression]);
-
-  // Subscribe to the avatar controller on mount
   useEffect(() => {
     const handleExpressionChange = (expr: Expression) => {
       setCurrentExpression(expr);
       onExpressionChange?.(expr);
     };
-
-    // Subscribe returns an unsubscribe function
     const unsubscribe = avatarController.subscribe(handleExpressionChange);
-
-    // Load initial expression
     setCurrentExpression(defaultExpression);
-
-    return () => {
-      isMounted.current = false;
-      unsubscribe();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => { unsubscribe(); };
   }, []);
 
   return (
@@ -69,24 +72,13 @@ export const AIAvatar: React.FC<AIAvatarProps> = ({
       className={cn('ai-avatar relative', className)}
       style={{ width: size, height: size }}
     >
-      {animationData ? (
-        <Lottie
-          animationData={animationData}
-          loop={LOOPING_EXPRESSIONS.includes(currentExpression)}
-          autoplay
-          style={{ width: '100%', height: '100%' }}
-        />
-      ) : (
-        <div className="w-full h-full rounded-full bg-yellow-100 animate-pulse flex items-center justify-center">
-          <div className="w-3 h-3 rounded-full bg-yellow-400" />
-        </div>
-      )}
+      <EmojiAvatar expression={currentExpression} size={size} />
     </div>
   );
 };
 
 // ---------------------------------------------------------------------------
-// AIAvatarStatic – standalone, driven by a direct expression prop
+// AIAvatarStatic – standalone
 // ---------------------------------------------------------------------------
 
 export const AIAvatarStatic: React.FC<AIAvatarStaticProps> = ({
@@ -94,30 +86,12 @@ export const AIAvatarStatic: React.FC<AIAvatarStaticProps> = ({
   size = 120,
   className,
 }) => {
-  const [animationData, setAnimationData] = useState<unknown>(null);
-
-  useEffect(() => {
-    const data = getLottieData(expression);
-    setAnimationData(data);
-  }, [expression]);
-
   return (
     <div
       className={cn('ai-avatar relative', className)}
       style={{ width: size, height: size }}
     >
-      {animationData ? (
-        <Lottie
-          animationData={animationData}
-          loop={LOOPING_EXPRESSIONS.includes(expression)}
-          autoplay
-          style={{ width: '100%', height: '100%' }}
-        />
-      ) : (
-        <div className="w-full h-full rounded-full bg-yellow-100 animate-pulse flex items-center justify-center">
-          <div className="w-3 h-3 rounded-full bg-yellow-400" />
-        </div>
-      )}
+      <EmojiAvatar expression={expression} size={size} />
     </div>
   );
 };

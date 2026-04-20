@@ -257,3 +257,47 @@ export function sentimentFallback(text: string): Expression {
 
   return 'neutral';
 }
+
+// ─── Reverse: Expression → Emoji ─────────────────────────────────────────────
+const EXPRESSION_TO_EMOJI: Record<Expression, string> = {
+  neutral: '😊',
+  happy: '😄',
+  sad: '😢',
+  angry: '😠',
+  fear: '😨',
+  surprise: '😲',
+  disgust: '🤢',
+  thinking: '🤔',
+  confused: '😕',
+  excited: '🤩',
+  sleepy: '😴',
+  love: '😍',
+  annoyed: '😒',
+  shy: '🙈',
+  proud: '😎',
+  bored: '😐',
+  nervous: '😬',
+  curious: '🧐',
+  suspicious: '🤨',
+  relieved: '😅',
+  ready: '👊',
+  processing: '⏳',
+  listening: '👂',
+  speaking: '🗣️',
+  error: '❌',
+  greeting: '👋',
+  winking: '😉',
+  celebrating: '🥳',
+  smirking: '😏',
+  wave_goodbye: '👋',
+  awkward: '😅',
+  determined: '💪',
+  hopeful: '🤞',
+  grateful: '🙏',
+  daydreaming: '💭',
+  alert: '⚠️',
+};
+
+export function getEmojiForExpression(expression: Expression): string {
+  return EXPRESSION_TO_EMOJI[expression] || '😊';
+}
